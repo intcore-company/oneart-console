@@ -1,0 +1,45 @@
+#!/usr/bin/env php
+<?php
+
+if (file_exists('./vendor/autoload.php')) {
+    require './vendor/autoload.php';
+} else if(file_exists(__DIR__.'/vendor/autoload.php')) {
+    require __DIR__.'/vendor/autoload.php';
+} else {
+    require __DIR__.'/../../../bootstrap/autoload.php';
+}
+
+if (file_exists('./bootstrap/app.php')) {
+    $laravel = require'./bootstrap/app.php';
+} else {
+    $laravel = require __DIR__.'/../../../bootstrap/app.php';
+}
+
+$commands = [
+    new OneART\Console\Commands\ChangeSourceNamespaceCommand(),
+    new OneART\Console\Commands\JobMakeCommand(),
+    new OneART\Console\Commands\JobDeleteCommand(),
+    new OneART\Console\Commands\ServiceMakeCommand(),
+    new OneART\Console\Commands\ServiceDeleteCommand(),
+    new OneART\Console\Commands\FeatureMakeCommand(),
+    new OneART\Console\Commands\FeatureDeleteCommand(),
+    new OneART\Console\Commands\ControllerMakeCommand(),
+    new OneART\Console\Commands\MigrationMakeCommand(),
+    new OneART\Console\Commands\ServicesListCommand(),
+    new OneART\Console\Commands\FeaturesListCommand(),
+
+    new \OneART\Console\Commands\ModelMakeCommand(),
+    new \OneART\Console\Commands\ModelDeleteCommand(),
+    new \OneART\Console\Commands\RequestMakeCommand(),
+    new \OneART\Console\Commands\RequestDeleteCommand(),
+    new \OneART\Console\Commands\PolicyMakeCommand(),
+    new \OneART\Console\Commands\PolicyDeleteCommand(),
+
+    new \OneART\Console\Commands\OperationMakeCommand(),
+    new \OneART\Console\Commands\OperationDeleteCommand(),
+];
+
+$app = new Symfony\Component\Console\Application('Intc Console', '0.1');
+array_walk($commands, [$app, 'add']);
+
+$app->run();

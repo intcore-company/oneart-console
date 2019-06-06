@@ -14,7 +14,7 @@
             "MakrRady\\OneARTConsole\\": "src/"
         }
     },
-    "bin": ["OneART"],
+    "bin": ["oneart"],
     "minimum-stability": "stable",
     "require": {
         "symfony/console": "^4.1",

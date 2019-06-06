@@ -39,7 +39,7 @@ $commands = [
     new \OneART\Console\Commands\OperationDeleteCommand(),
 ];
 
-$app = new Symfony\Component\Console\Application('Intc Console', '0.1');
+$app = new Symfony\Component\Console\Application('OneART Console', '0.1');
 array_walk($commands, [$app, 'add']);
 
 $app->run();

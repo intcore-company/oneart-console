@@ -1,4 +1,5 @@
 #!/usr/bin/env php
+#!/usr/bin/env php
 <?php
 
 if (file_exists('./vendor/autoload.php')) {
@@ -16,27 +17,27 @@ if (file_exists('./bootstrap/app.php')) {
 }
 
 $commands = [
-    new OneART\Console\Commands\ChangeSourceNamespaceCommand(),
-    new OneART\Console\Commands\JobMakeCommand(),
-    new OneART\Console\Commands\JobDeleteCommand(),
-    new OneART\Console\Commands\ServiceMakeCommand(),
-    new OneART\Console\Commands\ServiceDeleteCommand(),
-    new OneART\Console\Commands\FeatureMakeCommand(),
-    new OneART\Console\Commands\FeatureDeleteCommand(),
-    new OneART\Console\Commands\ControllerMakeCommand(),
-    new OneART\Console\Commands\MigrationMakeCommand(),
-    new OneART\Console\Commands\ServicesListCommand(),
-    new OneART\Console\Commands\FeaturesListCommand(),
+    new MarkRady\OneARTConsole\Commands\ChangeSourceNamespaceCommand(),
+    new MarkRady\OneARTConsole\Commands\JobMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\JobDeleteCommand(),
+    new MarkRady\OneARTConsole\Commands\ServiceMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\ServiceDeleteCommand(),
+    new MarkRady\OneARTConsole\Commands\FeatureMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\FeatureDeleteCommand(),
+    new MarkRady\OneARTConsole\Commands\ControllerMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\MigrationMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\ServicesListCommand(),
+    new MarkRady\OneARTConsole\Commands\FeaturesListCommand(),
 
-    new \OneART\Console\Commands\ModelMakeCommand(),
-    new \OneART\Console\Commands\ModelDeleteCommand(),
-    new \OneART\Console\Commands\RequestMakeCommand(),
-    new \OneART\Console\Commands\RequestDeleteCommand(),
-    new \OneART\Console\Commands\PolicyMakeCommand(),
-    new \OneART\Console\Commands\PolicyDeleteCommand(),
+    new MarkRady\OneARTConsole\Commands\ModelMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\ModelDeleteCommand(),
+    new MarkRady\OneARTConsole\Commands\RequestMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\RequestDeleteCommand(),
+    new MarkRady\OneARTConsole\Commands\PolicyMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\PolicyDeleteCommand(),
 
-    new \OneART\Console\Commands\OperationMakeCommand(),
-    new \OneART\Console\Commands\OperationDeleteCommand(),
+    new MarkRady\OneARTConsole\Commands\OperationMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\OperationDeleteCommand(),
 ];
 
 $app = new Symfony\Component\Console\Application('OneART Console', '0.1');

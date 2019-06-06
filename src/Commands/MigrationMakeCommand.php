@@ -12,8 +12,8 @@
 namespace MarkRady\OneARTConsole\Commands;
 
 use Illuminate\Support\Facades\Artisan;
-use OneART\Console\Command;
-use OneART\Console\Finder;
+use MarkRady\OneARTConsole\Command;
+use MarkRady\OneARTConsole\Finder;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 

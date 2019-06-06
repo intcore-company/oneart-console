@@ -4,8 +4,8 @@
 namespace MarkRady\OneARTConsole\Generators;
 
 use Exception;
-use OneART\Console\Str;
-use OneART\Console\Components\Policy;
+use MarkRady\OneARTConsole\Str;
+use MarkRady\OneARTConsole\Components\Policy;
 
 
 /**
@@ -13,7 +13,7 @@ use OneART\Console\Components\Policy;
  *
  * @author Bernat Jufré <info@behind.design>
  *
- * @package OneART\Console\Generators
+ * @package MarkRady\OneARTConsole\Generators
  */
 class PolicyGenerator extends Generator
 {

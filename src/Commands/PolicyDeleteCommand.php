@@ -3,10 +3,10 @@
 namespace MarkRady\OneARTConsole\Commands;
 
 use Exception;
-use OneART\Console\Str;
-use OneART\Console\Command;
-use OneART\Console\Filesystem;
-use OneART\Console\Finder;
+use MarkRady\OneARTConsole\Str;
+use MarkRady\OneARTConsole\Command;
+use MarkRady\OneARTConsole\Filesystem;
+use MarkRady\OneARTConsole\Finder;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
  *
  * @author Bernat Jufré <info@behind.design>
  *
- * @package OneART\Console\Commands
+ * @package MarkRady\OneARTConsole\Commands
  */
 class PolicyDeleteCommand extends SymfonyCommand
 {

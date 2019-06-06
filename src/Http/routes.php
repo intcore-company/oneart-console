@@ -43,7 +43,7 @@ Route::group(['prefix' => 'lucid'], function () {
     });
 
     Route::post('/services', function () {
-        return app(\OneART\Console\Generators\ServiceGenerator::class)->generate(request()->input('name'))->toArray();
+        return app(\MarkRady\OneARTConsole\Generators\ServiceGenerator::class)->generate(request()->input('name'))->toArray();
     });
 
     Route::get('/features/{name}', function ($name) {
@@ -55,7 +55,7 @@ Route::group(['prefix' => 'lucid'], function () {
     });
 
     Route::get('/domains/{name}/jobs', function ($name) {
-        return (new Controller())->listJobs(\OneART\Console\Str::domain($name));
+        return (new Controller())->listJobs(\MarkRady\OneARTConsole\Str::domain($name));
     });
 
     Route::get('/jobs', function () {
@@ -71,7 +71,7 @@ Route::group(['prefix' => 'lucid'], function () {
         $title = request()->input('title');
         $domain = request()->input('domain');
 
-        return app(\OneART\Console\Generators\JobGenerator::class)->generate($title, $domain)->toArray();
+        return app(\MarkRady\OneARTConsole\Generators\JobGenerator::class)->generate($title, $domain)->toArray();
     });
 
     Route::post('/features', function () {
@@ -80,7 +80,7 @@ Route::group(['prefix' => 'lucid'], function () {
         $service = request()->input('service');
         $jobs = request()->input('jobs');
 
-        return app(\OneART\Console\Generators\FeatureGenerator::class)->generate($title, $service, $jobs)->toArray();
+        return app(\MarkRady\OneARTConsole\Generators\FeatureGenerator::class)->generate($title, $service, $jobs)->toArray();
     });
 
     Route::get('/logs', function () {
@@ -99,7 +99,7 @@ Route::group(['prefix' => 'lucid'], function () {
     });
 
     Route::get('/analysis', function () {
-        return (new \OneART\Console\Analyser())->analyse();
+        return (new \MarkRady\OneARTConsole\Analyser())->analyse();
     });
 
 });

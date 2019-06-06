@@ -12,8 +12,8 @@
 namespace MarkRady\OneARTConsole\Generators;
 
 use Exception;
-use OneART\Console\Components\Service;
-use OneART\Console\Str;
+use MarkRady\OneARTConsole\Components\Service;
+use MarkRady\OneARTConsole\Str;
 
 /**
  * @author Abed Halawi <abed.halawi@vinelab.com>

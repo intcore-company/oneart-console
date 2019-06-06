@@ -11,9 +11,9 @@
 
  namespace MarkRady\OneARTConsole;
 
- use OneART\Console\Components\Job;
- use OneART\Console\Components\Domain;
- use OneART\Console\Components\Feature;
+ use MarkRady\OneARTConsole\Components\Job;
+ use MarkRady\OneARTConsole\Components\Domain;
+ use MarkRady\OneARTConsole\Components\Feature;
 
  /**
   * @author Abed Halawi <abed.halawi@vinelab.com>
@@ -29,7 +29,7 @@ class Parser
     /**
      * Get the list of jobs for the given feature.
      *
-     * @param  \OneART\Console\ComponentsFeature $feature
+     * @param  \MarkRady\OneARTConsole\ComponentsFeature $feature
      *
      * @return array
      */

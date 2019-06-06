@@ -11,11 +11,11 @@
 
 namespace MarkRady\OneARTConsole\Commands;
 
-use OneART\Console\Finder;
-use OneART\Console\Command;
-use OneART\Console\Filesystem;
+use MarkRady\OneARTConsole\Finder;
+use MarkRady\OneARTConsole\Command;
+use MarkRady\OneARTConsole\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
-use OneART\Console\Generators\ControllerGenerator;
+use MarkRady\OneARTConsole\Generators\ControllerGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 

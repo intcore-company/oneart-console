@@ -4,8 +4,8 @@
 namespace MarkRady\OneARTConsole\Generators;
 
 use Exception;
-use OneART\Console\Str;
-use OneART\Console\Components\Request;
+use MarkRady\OneARTConsole\Str;
+use MarkRady\OneARTConsole\Components\Request;
 
 
 /**
@@ -13,7 +13,7 @@ use OneART\Console\Components\Request;
  *
  * @author Bernat Jufré <info@behind.design>
  *
- * @package OneART\Console\Generators
+ * @package MarkRady\OneARTConsole\Generators
  */
 class RequestGenerator extends Generator
 {

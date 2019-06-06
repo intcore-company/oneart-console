@@ -8,7 +8,7 @@ namespace MarkRady\OneARTConsole\Components;
  *
  * @author Bernat Jufré <info@behind.design>
  *
- * @package OneART\Console\Components
+ * @package MarkRady\OneARTConsole\Components
  */
 class Model extends Component
 {

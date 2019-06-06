@@ -3,8 +3,8 @@
 namespace MarkRady\OneARTConsole\Generators;
 
 use Exception;
-use OneART\Console\Str;
-use OneART\Console\Components\Model;
+use MarkRady\OneARTConsole\Str;
+use MarkRady\OneARTConsole\Components\Model;
 
 
 /**
@@ -12,7 +12,7 @@ use OneART\Console\Components\Model;
  *
  * @author Bernat Jufré <info@behind.design>
  *
- * @package OneART\Console\Generators
+ * @package MarkRady\OneARTConsole\Generators
  */
 class ModelGenerator extends Generator
 {

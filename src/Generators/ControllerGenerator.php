@@ -12,7 +12,7 @@
 namespace MarkRady\OneARTConsole\Generators;
 
 use Exception;
-use OneART\Console\Str;
+use MarkRady\OneARTConsole\Str;
 
 /**
  * @author Abed Halawi <abed.halawi@vinelab.com>

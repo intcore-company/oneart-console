@@ -14,10 +14,10 @@ namespace MarkRady\OneARTConsole;
 use Exception;
 use InvalidArgumentException;
 use Illuminate\Support\Collection;
-use OneART\Console\Components\Feature;
-use OneART\Console\Components\Service;
-use OneART\Console\Components\Domain;
-use OneART\Console\Components\Job;
+use MarkRady\OneARTConsole\Components\Feature;
+use MarkRady\OneARTConsole\Components\Service;
+use MarkRady\OneARTConsole\Components\Domain;
+use MarkRady\OneARTConsole\Components\Job;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 define('DS', DIRECTORY_SEPARATOR);
@@ -562,7 +562,7 @@ trait Finder
      *
      * @param string $service
      *
-     * @return \OneART\Console\Components\Service
+     * @return \MarkRady\OneARTConsole\Components\Service
      */
     public function findService($service)
     {
@@ -584,7 +584,7 @@ trait Finder
      *
      * @param string $domain
      *
-     * @return \OneART\Console\Components\Domain
+     * @return \MarkRady\OneARTConsole\Components\Domain
      */
     public function findDomain($domain)
     {
@@ -611,7 +611,7 @@ trait Finder
      *
      * @param string $name
      *
-     * @return \OneART\Console\Components\Feature
+     * @return \MarkRady\OneARTConsole\Components\Feature
      */
     public function findFeature($name)
     {
@@ -642,7 +642,7 @@ trait Finder
      *
      * @param string $name
      *
-     * @return \OneART\Console\Components\Feature
+     * @return \MarkRady\OneARTConsole\Components\Feature
      */
     public function findJob($name)
     {

@@ -11,10 +11,10 @@
 
 namespace MarkRady\OneARTConsole\Commands;
 
-use OneART\Console\Finder;
-use OneART\Console\Command;
-use OneART\Console\Filesystem;
-use OneART\Console\Generators\ServiceGenerator;
+use MarkRady\OneARTConsole\Finder;
+use MarkRady\OneARTConsole\Command;
+use MarkRady\OneARTConsole\Filesystem;
+use MarkRady\OneARTConsole\Generators\ServiceGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 

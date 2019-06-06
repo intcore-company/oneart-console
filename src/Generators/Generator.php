@@ -11,8 +11,8 @@
 
 namespace MarkRady\OneARTConsole\Generators;
 
-use OneART\Console\Finder;
-use OneART\Console\Filesystem;
+use MarkRady\OneARTConsole\Finder;
+use MarkRady\OneARTConsole\Filesystem;
 use Illuminate\Filesystem\Filesystem as IlluminateFilesystem;
 
 /**

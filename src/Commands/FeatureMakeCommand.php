@@ -1,13 +1,5 @@
 <?php
 
-/*
- * This file is part of the lucid-console project.
- *
- * (c) Vinelab <dev@vinelab.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 namespace MarkRady\OneARTConsole\Commands;
 
@@ -19,9 +11,6 @@ use MarkRady\OneARTConsole\Generators\FeatureGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class FeatureMakeCommand extends SymfonyCommand
 {
     use Finder;
@@ -57,11 +46,11 @@ class FeatureMakeCommand extends SymfonyCommand
     public function handle()
     {
         try {
-            $service = studly_case($this->argument('service'));
+            $domain = $this->argument('domain');
             $title = $this->parseName($this->argument('feature'));
 
             $generator = new FeatureGenerator();
-            $feature = $generator->generate($title, $service);
+            $feature = $generator->generate($title, $domain);
 
             $this->info(
                 'Feature class '.$feature->title.' created successfully.'.
@@ -83,7 +72,7 @@ class FeatureMakeCommand extends SymfonyCommand
     {
         return [
             ['feature', InputArgument::REQUIRED, 'The feature\'s name.'],
-            ['service', InputArgument::OPTIONAL, 'The service in which the feature should be implemented.'],
+            ['domain', InputArgument::REQUIRED, 'The domain in which the feature should be implemented.'],
         ];
     }
 

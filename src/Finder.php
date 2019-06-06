@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the lucid-console project.
- *
- * (c) Vinelab <dev@vinelab.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace MarkRady\OneARTConsole;
 
 use Exception;
@@ -718,15 +709,27 @@ trait Finder
     }
 
     /**
+     * Find the model root path in the given service.
+     *
+     * @param string $service
+     *
+     * @return string
+     */
+    public function findModelRootPath($service)
+    {
+        return $this->findServicePath($service).'/Models';
+    }
+
+    /**
      * Get the path to the passed model.
      *
      * @param string $model
      *
      * @return string
      */
-    public function findModelPath($model)
+    public function findModelPath($service, $model)
     {
-        return $this->getSourceDirectoryName().'/Data/'.$model.'.php';
+        return $this->findModelRootPath($service)."/$model.php";
     }
 
     /**

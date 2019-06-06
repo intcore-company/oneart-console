@@ -23,10 +23,10 @@ class ModelGenerator extends Generator
      * @return Model|bool
      * @throws Exception
      */
-    public function generate($name)
+    public function generate($name, $domain)
     {
         $model = Str::model($name);
-        $path = $this->findModelPath($model);
+        $path = $this->findModelPath($domain, $model);
 
         if ($this->exists($path)) {
             throw new Exception('Model already exists');

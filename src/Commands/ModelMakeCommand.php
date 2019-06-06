@@ -52,11 +52,11 @@ class ModelMakeCommand extends SymfonyCommand
     public function handle()
     {
         $generator = new ModelGenerator();
-
+        $domain = $this->argument('domain');
         $name = $this->argument('model');
 
         try {
-            $model = $generator->generate($name);
+            $model = $generator->generate($name, $domain);
 
             $this->info('Model class created successfully.' .
                 "\n" .
@@ -76,7 +76,8 @@ class ModelMakeCommand extends SymfonyCommand
     public function getArguments()
     {
         return [
-            ['model', InputArgument::REQUIRED, 'The Model\'s name.']
+            ['model', InputArgument::REQUIRED, 'The Model\'s name.'],
+            ['domain', InputArgument::REQUIRED, 'The Domain\'s name.']
         ];
     }
 

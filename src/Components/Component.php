@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the lucid-console project.
- *
- * (c) Vinelab <dev@vinelab.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace MarkRady\OneARTConsole\Components;
 
 use Illuminate\Contracts\Support\Arrayable;

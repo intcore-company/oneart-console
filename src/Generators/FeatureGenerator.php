@@ -1,31 +1,22 @@
 <?php
 
-/*
- * This file is part of the lucid-console project.
- *
- * (c) Vinelab <dev@vinelab.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace MarkRady\OneARTConsole\Generators;
 
 use Exception;
 use MarkRady\OneARTConsole\Str;
 use MarkRady\OneARTConsole\Components\Feature;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
+
 class FeatureGenerator extends Generator
 {
-    public function generate($feature, $service, array $jobs = [])
+    public function generate($feature, $domain, array $jobs = [])
     {
         $feature = Str::feature($feature);
-        $service = Str::service($service);
+        $domain = Str::service($domain);
+        if (empty($domain))
+            throw new Exception('domain not specified!');
 
-        $path = $this->findFeaturePath($service, $feature);
+        $path = $this->findFeaturePath($domain, $feature);
 
         if ($this->exists($path)) {
             throw new Exception('Feature already exists!');
@@ -33,7 +24,7 @@ class FeatureGenerator extends Generator
             return false;
         }
 
-        $namespace = $this->findFeatureNamespace($service);
+        $namespace = $this->findFeatureNamespace($domain);
 
         $content = file_get_contents($this->getStub());
 
@@ -59,14 +50,14 @@ class FeatureGenerator extends Generator
         $this->createFile($path, $content);
 
         // generate test file
-        $this->generateTestFile($feature, $service);
+        $this->generateTestFile($feature, $domain);
 
         return new Feature(
             $feature,
             basename($path),
             $path,
             $this->relativeFromReal($path),
-            ($service) ? $this->findService($service) : null,
+            ($domain) ? $this->findService($domain) : null,
             $content
         );
     }
@@ -75,25 +66,25 @@ class FeatureGenerator extends Generator
      * Generate the test file.
      *
      * @param  string $feature
-     * @param  string $service
+     * @param  string $domain
      */
-    private function generateTestFile($feature, $service)
+    private function generateTestFile($feature, $domain)
     {
-    	$content = file_get_contents($this->getTestStub());
+        $content = file_get_contents($this->getTestStub());
 
-    	$namespace = $this->findFeatureTestNamespace($service);
-        $featureNamespace = $this->findFeatureNamespace($service)."\\$feature";
+        $namespace = $this->findFeatureTestNamespace($domain);
+        $featureNamespace = $this->findFeatureNamespace($domain)."\\$feature";
         $testClass = $feature.'Test';
 
-    	$content = str_replace(
-    		['{{namespace}}', '{{testclass}}', '{{feature}}', '{{feature_namespace}}'],
-    		[$namespace, $testClass, mb_strtolower($feature), $featureNamespace],
-    		$content
-    	);
+        $content = str_replace(
+            ['{{namespace}}', '{{testclass}}', '{{feature}}', '{{feature_namespace}}'],
+            [$namespace, $testClass, mb_strtolower($feature), $featureNamespace],
+            $content
+        );
 
-    	$path = $this->findFeatureTestPath($service, $testClass);
+        $path = $this->findFeatureTestPath($domain, $testClass);
 
-    	$this->createFile($path, $content);
+        $this->createFile($path, $content);
     }
 
     /**
@@ -113,6 +104,6 @@ class FeatureGenerator extends Generator
      */
     private function getTestStub()
     {
-    	return __DIR__.'/stubs/feature-test.stub';
+        return __DIR__.'/stubs/feature-test.stub';
     }
 }

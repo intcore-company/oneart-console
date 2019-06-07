@@ -13,9 +13,7 @@ use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 define('DS', DIRECTORY_SEPARATOR);
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
+
 trait Finder
 {
     /**
@@ -151,7 +149,7 @@ trait Finder
      */
     public function findFoundationNamespace()
     {
-        return 'OneART\Foundation';
+        return 'MarkRady\OneARTFoundation';
     }
 
     /**
@@ -252,6 +250,7 @@ trait Finder
     {
         return $this->findServiceNamespace($service).'\\Features';
     }
+
 
     /**
      * Find the namespace for features tests in the given service.
@@ -381,48 +380,6 @@ trait Finder
         return $domains;
     }
 
-    /**
-     * List the jobs per domain,
-     * optionally provide a domain name to list its jobs.
-     *
-     * @param string $domain
-     *
-     * @return Collection
-     */
-    public function listJobs($domainName = null)
-    {
-        $domains = ($domainName) ? [$this->findDomain(Str::domain($domainName))] : $this->listDomains();
-
-        $jobs = new Collection();
-        foreach ($domains as $domain) {
-            $path = $domain->realPath;
-
-            $finder = new SymfonyFinder();
-            $files = $finder
-                ->name('*Job.php')
-                ->in($path.'/Jobs')
-                ->files();
-
-            $jobs[$domain->name] = new Collection();
-
-            foreach ($files as $file) {
-                $name = $file->getRelativePathName();
-                $job = new Job(
-                    Str::realName($name, '/Job.php/'),
-                    $this->findDomainJobsNamespace($domain->name),
-                    $name,
-                    $file->getRealPath(),
-                    $this->relativeFromReal($file->getRealPath()),
-                    $domain,
-                    file_get_contents($file->getRealPath())
-                );
-
-                $jobs[$domain->name]->push($job);
-            }
-        }
-
-        return $jobs;
-    }
 
     /**
      * Find the path for the given job name.
@@ -434,8 +391,22 @@ trait Finder
      */
     public function findJobPath($domain, $job)
     {
-        return $this->findDomainPath($domain).DS.'Jobs'.DS.$job.'.php';
+        return $this->findJobRootPath($domain)."/$job.php";
+
     }
+
+    /**
+     * Find the job root path in the given domain.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findJobRootPath($domain)
+    {
+        return $this->findServicePath($domain).'/Jobs';
+    }
+
 
     /**
      * Find the namespace for the given domain.
@@ -458,7 +429,7 @@ trait Finder
      */
     public function findDomainJobsNamespace($domain)
     {
-        return $this->findDomainNamespace($domain).'\Jobs';
+        return $this->findServiceNamespace($domain).'\Jobs';
     }
 
     /**
@@ -470,7 +441,7 @@ trait Finder
      */
     public function findDomainJobsTestsNamespace($domain)
     {
-        return $this->findDomainNamespace($domain).'\Tests\Jobs';
+        return $this->findServiceNamespace($domain).'\Tests\Jobs';
     }
 
     /**
@@ -499,7 +470,7 @@ trait Finder
      */
     public function findJobTestPath($domain, $jobTest)
     {
-        return $this->findDomainTestsPath($domain).DS.'Jobs'.DS.$jobTest.'.php';
+        return $this->findServicesRootPath($domain).DS.'Jobs'.DS.$jobTest.'.php';
     }
 
     /**
@@ -727,9 +698,9 @@ trait Finder
      *
      * @return string
      */
-    public function findModelPath($service, $model)
+    public function findModelPath($model, $domain)
     {
-        return $this->findModelRootPath($service)."/$model.php";
+        return $this->findModelRootPath($domain)."/$model.php";
     }
 
     /**
@@ -737,21 +708,22 @@ trait Finder
      *
      * @return string
      */
-    public function findPoliciesPath()
+    public function findPoliciesPath($domain)
     {
-        return $this->getSourceDirectoryName().'/Policies';
+        return $this->findServicePath($domain).'/Policies';
     }
 
     /**
      * Get the path to the passed policy.
      *
      * @param string $policy
+     * @param string $domain
      *
      * @return string
      */
-    public function findPolicyPath($policy)
+    public function findPolicyPath($policy, $domain)
     {
-        return $this->findPoliciesPath().'/'.$policy.'.php';
+        return $this->findPoliciesPath($domain)."/$policy.php";
     }
 
     /**
@@ -784,9 +756,9 @@ trait Finder
      *
      * @return string
      */
-    public function findModelNamespace()
+    public function findModelNamespace($domain)
     {
-        return $this->findRootNamespace().'\\Data';
+        return $this->findServiceNamespace($domain).'\\Models';
     }
 
     /**
@@ -794,10 +766,12 @@ trait Finder
      *
      * @return mixed
      */
-    public function findPolicyNamespace()
+    public function findPolicyNamespace($domain)
     {
-        return $this->findRootNamespace().'\\Policies';
+        return $this->findServiceNamespace($domain).'\\Policies';
     }
+
+    
 
     /**
      * Get the requests namespace for the service passed in.

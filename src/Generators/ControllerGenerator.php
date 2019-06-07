@@ -1,30 +1,26 @@
 <?php
 
-/*
- * This file is part of the laravel-console project.
- *
- * (c) Vinelab <dev@vinelab.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace MarkRady\OneARTConsole\Generators;
 
 use Exception;
 use MarkRady\OneARTConsole\Str;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class ControllerGenerator extends Generator
 {
-    public function generate($name, $service, $plain = false)
+    /**
+     * Generate the file.
+     *
+     * @param $name
+     * @param $domain
+     * @return Controller|bool
+     * @throws Exception
+     */
+    public function generate($name, $domain, $plain = false)
     {
         $name = Str::controller($name);
-        $service = Str::service($service);
+        $domain = Str::service($domain);
 
-        $path = $this->findControllerPath($service, $name);
+        $path = $this->findControllerPath($domain, $name);
 
         if ($this->exists($path)) {
             throw new Exception('Controller already exists!');
@@ -32,7 +28,7 @@ class ControllerGenerator extends Generator
             return false;
         }
 
-        $namespace = $this->findControllerNamespace($service);
+        $namespace = $this->findControllerNamespace($domain);
 
         $content = file_get_contents($this->getStub($plain));
         $content = str_replace(

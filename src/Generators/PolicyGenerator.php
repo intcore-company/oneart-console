@@ -8,13 +8,6 @@ use MarkRady\OneARTConsole\Str;
 use MarkRady\OneARTConsole\Components\Policy;
 
 
-/**
- * Class PolicyGenerator
- *
- * @author Bernat Jufré <info@behind.design>
- *
- * @package MarkRady\OneARTConsole\Generators
- */
 class PolicyGenerator extends Generator
 {
     /**
@@ -24,10 +17,12 @@ class PolicyGenerator extends Generator
      * @return Policy|bool
      * @throws Exception
      */
-    public function generate($name)
+    public function generate($name, $domain)
     {
         $policy = Str::policy($name);
-        $path = $this->findPolicyPath($policy);
+        $domain = Str::service($domain);
+        $path = $this->findPolicyPath($policy, $domain);
+
 
         if ($this->exists($path)) {
             throw new Exception('Policy already exists');
@@ -35,9 +30,9 @@ class PolicyGenerator extends Generator
             return false;
         }
 
-        $this->createPolicyDirectory();
+        $this->createPolicyDirectory($domain);
 
-        $namespace = $this->findPolicyNamespace();
+        $namespace = $this->findPolicyNamespace($domain);
 
         $content = file_get_contents($this->getStub());
         $content = str_replace(
@@ -61,9 +56,9 @@ class PolicyGenerator extends Generator
     /**
      * Create Policies directory.
      */
-    public function createPolicyDirectory()
+    public function createPolicyDirectory($domain)
     {
-        $this->createDirectory($this->findPoliciesPath());
+        $this->createDirectory($this->findPoliciesPath($domain));
     }
 
     /**

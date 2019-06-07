@@ -54,9 +54,10 @@ class PolicyMakeCommand extends SymfonyCommand
         $generator = new PolicyGenerator();
 
         $name = $this->argument('policy');
+        $domain = $this->argument('domain');
 
         try {
-            $policy = $generator->generate($name);
+            $policy = $generator->generate($name, $domain);
 
             $this->info('Policy class created successfully.' .
                 "\n" .
@@ -76,7 +77,8 @@ class PolicyMakeCommand extends SymfonyCommand
     public function getArguments()
     {
         return [
-            ['policy', InputArgument::REQUIRED, 'The Policy\'s name.']
+            ['policy', InputArgument::REQUIRED, 'The Policy\'s name.'],
+            ['domain', InputArgument::REQUIRED, 'The domain\'s name.']
         ];
     }
 

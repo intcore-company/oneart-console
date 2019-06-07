@@ -31,7 +31,7 @@ class ControllerMakeCommand extends SymfonyCommand
      *
      * @var string
      */
-    protected $description = 'Create a new resource Controller class in a service';
+    protected $description = 'Create a new resource Controller class in a domain';
 
     /**
      * The type of class being generated.
@@ -49,11 +49,11 @@ class ControllerMakeCommand extends SymfonyCommand
     {
         $generator = new ControllerGenerator();
 
-        $service = $this->argument('service');
+        $domain = $this->argument('domain');
         $name = $this->argument('controller');
 
         try {
-            $controller = $generator->generate($name, $service, $this->option('plain'));
+            $controller = $generator->generate($name, $domain, $this->option('plain'));
 
             $this->info('Controller class created successfully.'.
                 "\n".
@@ -74,7 +74,7 @@ class ControllerMakeCommand extends SymfonyCommand
     {
         return [
             ['controller', InputArgument::REQUIRED, 'The controller\'s name.'],
-            ['service', InputArgument::OPTIONAL, 'The service in which the controller should be generated.'],
+            ['domain', InputArgument::OPTIONAL, 'The domain in which the controller should be generated.'],
         ];
     }
 

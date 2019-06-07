@@ -28,7 +28,6 @@ class JobGenerator extends Generator
 
         // Create the job
         $namespace = $this->findDomainJobsNamespace($domain);
-
         $content = file_get_contents($this->getStub($isQueueable));
         $content = str_replace(
             ['{{job}}', '{{namespace}}', '{{foundation_namespace}}'],

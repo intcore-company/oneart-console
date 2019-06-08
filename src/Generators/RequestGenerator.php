@@ -21,15 +21,15 @@ class RequestGenerator extends Generator
      * Generate the file.
      *
      * @param string $name
-     * @param string $service
+     * @param string $domain
      * @return Request|bool
      * @throws Exception
      */
-    public function generate($name, $service)
+    public function generate($name, $domain)
     {
         $request = Str::request($name);
-        $service = Str::service($service);
-        $path = $this->findRequestPath($service, $request);
+        $domain = Str::service($domain);
+        $path = $this->findRequestPath($domain, $request);
 
         if ($this->exists($path)) {
             throw new Exception('Request already exists');
@@ -37,7 +37,7 @@ class RequestGenerator extends Generator
             return false;
         }
 
-        $namespace = $this->findRequestsNamespace($service);
+        $namespace = $this->findRequestsNamespace($domain);
 
         $content = file_get_contents($this->getStub());
         $content = str_replace(
@@ -50,7 +50,7 @@ class RequestGenerator extends Generator
 
         return new Request(
             $request,
-            $service,
+            ($domain) ? $this->findService($domain) : null,
             $namespace,
             basename($path),
             $path,

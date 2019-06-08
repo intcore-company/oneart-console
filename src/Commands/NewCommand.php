@@ -9,9 +9,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class NewCommand extends Command
 {
     /**
@@ -21,7 +18,7 @@ class NewCommand extends Command
     {
         $this
             ->setName('new')
-            ->setDescription('Create a new Lucid-architected project')
+            ->setDescription('Create a new One-architected project')
             ->addArgument('name', InputArgument::OPTIONAL)
             ->addOption('laravel', null, InputOption::VALUE_NONE, 'Specify the Laravel version you wish to install');
     }
@@ -39,10 +36,10 @@ class NewCommand extends Command
             $output
         );
 
-        $output->writeln('<info>Crafting Lucid application...</info>');
+        $output->writeln('<info>Crafting OneART application...</info>');
 
         /*
-         * @TODO: Get Lucid based on the Laravel version.
+         * @TODO: Get OneART based on the Laravel version.
          */
         $process = new Process($this->findComposer().' create-project laravel/laravel '.$directory);
 

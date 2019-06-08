@@ -6,9 +6,6 @@ use Exception;
 use MarkRady\OneARTConsole\Str;
 use MarkRady\OneARTConsole\Components\Job;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class JobGenerator extends Generator
 {
     public function generate($job, $domain, $isQueueable = false)
@@ -45,7 +42,7 @@ class JobGenerator extends Generator
             basename($path),
             $path,
             $this->relativeFromReal($path),
-            $this->findDomain($domain),
+            ($domain) ? $this->findService($domain) : null,
             $content
         );
     }

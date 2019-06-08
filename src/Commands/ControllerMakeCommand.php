@@ -10,9 +10,6 @@ use MarkRady\OneARTConsole\Generators\ControllerGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class ControllerMakeCommand extends SymfonyCommand
 {
     use Finder;
@@ -54,7 +51,6 @@ class ControllerMakeCommand extends SymfonyCommand
 
         try {
             $controller = $generator->generate($name, $domain, $this->option('plain'));
-
             $this->info('Controller class created successfully.'.
                 "\n".
                 "\n".
@@ -74,7 +70,7 @@ class ControllerMakeCommand extends SymfonyCommand
     {
         return [
             ['controller', InputArgument::REQUIRED, 'The controller\'s name.'],
-            ['domain', InputArgument::OPTIONAL, 'The domain in which the controller should be generated.'],
+            ['domain', InputArgument::REQUIRED, 'The domain in which the controller should be generated.'],
         ];
     }
 

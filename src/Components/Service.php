@@ -2,9 +2,6 @@
 
 namespace MarkRady\OneARTConsole\Components;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class Service extends Component
 {
     public function __construct($name, $realPath, $relativePath)

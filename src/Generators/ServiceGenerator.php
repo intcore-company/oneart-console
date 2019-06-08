@@ -6,9 +6,6 @@ use Exception;
 use MarkRady\OneARTConsole\Components\Service;
 use MarkRady\OneARTConsole\Str;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class ServiceGenerator extends Generator
 {
     /**

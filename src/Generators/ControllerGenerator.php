@@ -18,7 +18,7 @@ class ControllerGenerator extends Generator
     public function generate($name, $domain, $plain = false)
     {
         $name = Str::controller($name);
-        $domain = Str::service($domain);
+        $domain = Str::domain($domain);
 
         $path = $this->findControllerPath($domain, $name);
 

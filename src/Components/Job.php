@@ -2,12 +2,9 @@
 
 namespace MarkRady\OneARTConsole\Components;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class Job extends Component
 {
-    public function __construct($title, $namespace, $file, $path, $relativePath, Domain $domain = null, $content = '')
+    public function __construct($title, $namespace, $file, $path, $relativePath, Service $service, $content)
     {
         $className = str_replace(' ', '', $title).'Job';
         $this->setAttributes([
@@ -17,19 +14,9 @@ class Job extends Component
             'file' => $file,
             'realPath' => $path,
             'relativePath' => $relativePath,
-            'domain' => $domain,
+            'service' => $service,
             'content' => $content,
         ]);
     }
-
-    public function toArray()
-    {
-        $attributes = parent::toArray();
-
-        if ($attributes['domain'] instanceof Domain) {
-            $attributes['domain'] = $attributes['domain']->toArray();
-        }
-
-        return $attributes;
-    }
 }
+

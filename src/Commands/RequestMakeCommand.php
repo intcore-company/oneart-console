@@ -58,7 +58,6 @@ class RequestMakeCommand extends SymfonyCommand
 
         try {
             $request = $generator->generate($name, $service);
-
             $this->info('Request class created successfully.' .
                 "\n" .
                 "\n" .

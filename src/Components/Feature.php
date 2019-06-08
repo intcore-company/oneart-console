@@ -2,9 +2,6 @@
 
 namespace MarkRady\OneARTConsole\Components;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class Feature extends Component
 {
     public function __construct($title, $file, $realPath, $relativePath, Service $service = null, $content = '')

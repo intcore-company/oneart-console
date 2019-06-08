@@ -49,6 +49,7 @@ class PolicyGenerator extends Generator
             basename($path),
             $path,
             $this->relativeFromReal($path),
+            ($domain) ? $this->findService($domain) : null,
             $content
         );
     }

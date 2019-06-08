@@ -11,9 +11,6 @@ use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class JobMakeCommand extends SymfonyCommand
 {
     use Finder;

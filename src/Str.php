@@ -3,9 +3,6 @@
 
 namespace MarkRady\OneARTConsole;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class Str
 {
     /**
@@ -75,15 +72,14 @@ class Str
     }
 
     /**
-     * Get the given name formatted as a domain.
-     *
-     * Domain names are just CamelCase
+     * @DEPRICATED
+     * Get the given name formatted as a service name.
      *
      * @param string $name
      *
      * @return string
      */
-    public static function domain($name)
+    public static function service($name)
     {
         return studly_case($name);
     }
@@ -95,10 +91,12 @@ class Str
      *
      * @return string
      */
-    public static function service($name)
+    public static function domain($name)
     {
         return studly_case($name);
     }
+
+
 
     /**
      * Get the given name formatted as a controller name.

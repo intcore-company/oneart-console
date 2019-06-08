@@ -8,9 +8,6 @@ use MarkRady\OneARTConsole\Finder;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class MigrationMakeCommand extends SymfonyCommand
 {
     use Finder;

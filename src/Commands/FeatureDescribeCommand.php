@@ -7,9 +7,6 @@
  use Illuminate\Console\Command;
  use Symfony\Component\Console\Input\InputArgument;
 
- /**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
  class FeatureDescribeCommand extends Command
  {
 

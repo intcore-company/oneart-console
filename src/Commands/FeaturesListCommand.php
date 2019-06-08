@@ -7,9 +7,6 @@ use MarkRady\OneARTConsole\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class FeaturesListCommand extends SymfonyCommand
 {
     use Finder;

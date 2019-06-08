@@ -9,9 +9,6 @@ use MarkRady\OneARTConsole\Generators\ServiceGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class ServiceMakeCommand extends SymfonyCommand
 {
     use Finder;

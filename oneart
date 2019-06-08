@@ -19,7 +19,7 @@ if (file_exists('./bootstrap/app.php')) {
 $commands = [
     new MarkRady\OneARTConsole\Commands\ChangeSourceNamespaceCommand(),
     new MarkRady\OneARTConsole\Commands\JobMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\ServiceMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\DomainMakeCommand(),
     new MarkRady\OneARTConsole\Commands\FeatureMakeCommand(),
     new MarkRady\OneARTConsole\Commands\ControllerMakeCommand(),
     new MarkRady\OneARTConsole\Commands\MigrationMakeCommand(),

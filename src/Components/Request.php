@@ -13,11 +13,11 @@ namespace MarkRady\OneARTConsole\Components;
  */
 class Request extends Component
 {
-    public function __construct($title, $service, $namespace, $file, $path, $relativePath, $content)
+    public function __construct($title, $namespace, $file, $path, $relativePath, Domain $domain, $content)
     {
         $this->setAttributes([
             'request' => $title,
-            'service' => $service,
+            'domain' => $domain,
             'namespace' => $namespace,
             'file' => $file,
             'path' => $path,

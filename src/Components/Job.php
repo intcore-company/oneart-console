@@ -4,7 +4,7 @@ namespace MarkRady\OneARTConsole\Components;
 
 class Job extends Component
 {
-    public function __construct($title, $namespace, $file, $path, $relativePath, Service $service, $content)
+    public function __construct($title, $namespace, $file, $path, $relativePath, Domain $service, $content)
     {
         $className = str_replace(' ', '', $title).'Job';
         $this->setAttributes([

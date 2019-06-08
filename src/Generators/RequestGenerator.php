@@ -50,11 +50,11 @@ class RequestGenerator extends Generator
 
         return new Request(
             $request,
-            ($domain) ? $this->findService($domain) : null,
             $namespace,
             basename($path),
             $path,
             $this->relativeFromReal($path),
+            $this->findDomain($domain),
             $content
         );
     }

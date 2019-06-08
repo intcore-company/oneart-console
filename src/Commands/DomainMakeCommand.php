@@ -5,11 +5,11 @@ namespace MarkRady\OneARTConsole\Commands;
 use MarkRady\OneARTConsole\Finder;
 use MarkRady\OneARTConsole\Command;
 use MarkRady\OneARTConsole\Filesystem;
-use MarkRady\OneARTConsole\Generators\ServiceGenerator;
+use MarkRady\OneARTConsole\Generators\DomainGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
-class ServiceMakeCommand extends SymfonyCommand
+class DomainMakeCommand extends SymfonyCommand
 {
     use Finder;
     use Command;
@@ -34,7 +34,7 @@ class ServiceMakeCommand extends SymfonyCommand
      *
      * @var string
      */
-    protected $name = 'make:service';
+    protected $name = 'make:domain';
 
     /**
      * The console command description.
@@ -63,15 +63,15 @@ class ServiceMakeCommand extends SymfonyCommand
         try {
             $name = $this->argument('name');
 
-            $generator = new ServiceGenerator();
-            $service = $generator->generate($name);
+            $generator = new DomainGenerator();
+            $domain = $generator->generate($name);
 
-            $this->info('Service '.$service->name.' created successfully.'."\n");
+            $this->info('Domain '.$domain->name.' created successfully.'."\n");
 
             $rootNamespace = $this->findRootNamespace();
-            $serviceNamespace = $this->findServiceNamespace($service->name);
+            $domainNamespace = $this->findServiceNamespace($domain->name);
 
-            $serviceProvider = $serviceNamespace.'\\Providers\\'.$service->name.'ServiceProvider';
+            $serviceProvider = $domainNamespace.'\\Providers\\'.$domain->name.'ServiceProvider';
 
             $this->info('Activate it by registering '.
                 '<comment>'.$serviceProvider.'</comment> '.
@@ -90,7 +90,7 @@ class ServiceMakeCommand extends SymfonyCommand
     public function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The service name.'],
+            ['name', InputArgument::REQUIRED, 'The domain name.'],
         ];
     }
 }

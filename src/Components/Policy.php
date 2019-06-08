@@ -12,7 +12,7 @@ namespace MarkRady\OneARTConsole\Components;
  */
 class Policy extends Component
 {
-    public function __construct($title, $namespace, $file, $path, $relativePath, Service $service, $content)
+    public function __construct($title, $namespace, $file, $path, $relativePath, Domain $service, $content)
     {
         $this->setAttributes([
             'policy' => $title,

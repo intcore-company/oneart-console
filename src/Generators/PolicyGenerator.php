@@ -20,7 +20,7 @@ class PolicyGenerator extends Generator
     public function generate($name, $domain)
     {
         $policy = Str::policy($name);
-        $domain = Str::service($domain);
+        $domain = Str::domain($domain);
         $path = $this->findPolicyPath($policy, $domain);
 
 
@@ -49,7 +49,7 @@ class PolicyGenerator extends Generator
             basename($path),
             $path,
             $this->relativeFromReal($path),
-            ($domain) ? $this->findService($domain) : null,
+            $this->findDomain($domain),
             $content
         );
     }

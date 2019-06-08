@@ -50,6 +50,7 @@ class ModelGenerator extends Generator
             basename($path),
             $path,
             $this->relativeFromReal($path),
+            $this->findDomain($domain),
             $content
         );
     }

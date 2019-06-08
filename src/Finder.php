@@ -153,20 +153,6 @@ trait Finder
     }
 
     /**
-     * Find the namespace for the given service name.
-     *
-     * @param string $service
-     *
-     * @return string
-     */
-    public function findServiceNamespace($service)
-    {
-        $root = $this->findRootNamespace();
-
-        return (!$service) ? $root : "$root\\Services\\$service";
-    }
-
-    /**
      * get the root of the source directory.
      *
      * @return string
@@ -183,20 +169,20 @@ trait Finder
      */
     public function findServicesRootPath()
     {
-        return $this->findSourceRoot().'/Services';
+        return $this->findSourceRoot().'/Domains';
     }
 
     /**
-     * Find the path to the directory of the given service name.
-     * In the case of a microservice service installation this will be app path.
+     * Find the path to the directory of the given domain name.
+     * In the case of a microservice domain installation this will be app path.
      *
-     * @param string $service
+     * @param string $domain
      *
      * @return string
      */
-    public function findServicePath($service)
+    public function findDomainPath($domain)
     {
-        return (!$service) ? app_path() : $this->findServicesRootPath()."/$service";
+        return (!$domain) ? app_path() : $this->findServicesRootPath()."/$domain";
     }
 
     /**
@@ -208,7 +194,7 @@ trait Finder
      */
     public function findFeaturesRootPath($service)
     {
-        return $this->findServicePath($service).'/Features';
+        return $this->findDomainPath($service).'/Features';
     }
 
     /**
@@ -234,7 +220,7 @@ trait Finder
      */
     public function findFeatureTestPath($service, $test)
     {
-        $root = ($service) ? $this->findServicePath($service).'/Tests' : base_path().'/tests';
+        $root = ($service) ? $this->findDomainPath($service).'/Tests' : base_path().'/tests';
 
         return "$root/Features/$test.php";
     }
@@ -248,7 +234,7 @@ trait Finder
      */
     public function findFeatureNamespace($service)
     {
-        return $this->findServiceNamespace($service).'\\Features';
+        return $this->findDomainNamespace($service).'\\Features';
     }
 
 
@@ -261,72 +247,9 @@ trait Finder
      */
     public function findFeatureTestNamespace($service)
     {
-        return $this->findServiceNamespace($service).'\\Tests\\Features';
+        return $this->findDomainNamespace($service).'\\Tests\\Features';
     }
 
-    /**
-     * Find the operations root path in the given service.
-     *
-     * @param string $service
-     *
-     * @return string
-     */
-    public function findOperationsRootPath($service)
-    {
-        return $this->findServicePath($service).'/Operations';
-    }
-
-    /**
-     * Find the file path for the given operation.
-     *
-     * @param string $service
-     * @param string $operation
-     *
-     * @return string
-     */
-    public function findOperationPath($service, $operation)
-    {
-        return $this->findOperationsRootPath($service)."/$operation.php";
-    }
-
-    /**
-     * Find the test file path for the given operation.
-     *
-     * @param string $service
-     * @param string $operation
-     *
-     * @return string
-     */
-    public function findOperationTestPath($service, $test)
-    {
-        $root = ($service) ? $this->findServicePath($service).'/Tests' : base_path().'/tests';
-
-        return "$root/Operations/$test.php";
-    }
-
-    /**
-     * Find the namespace for operations in the given service.
-     *
-     * @param string $service
-     *
-     * @return string
-     */
-    public function findOperationNamespace($service)
-    {
-        return $this->findServiceNamespace($service).'\\Operations';
-    }
-
-    /**
-     * Find the namespace for operations tests in the given service.
-     *
-     * @param string $service
-     *
-     * @return string
-     */
-    public function findOperationTestNamespace($service)
-    {
-        return $this->findServiceNamespace($service).'\\Tests\\Operations';
-    }
 
     /**
      * Find the root path of domains.
@@ -338,17 +261,6 @@ trait Finder
         return $this->findSourceRoot().'/Domains';
     }
 
-    /**
-     * Find the path for the given domain.
-     *
-     * @param string $domain
-     *
-     * @return string
-     */
-    public function findDomainPath($domain)
-    {
-        return $this->findDomainsRootPath()."/$domain";
-    }
 
     /**
      * Get the list of domains.
@@ -404,7 +316,7 @@ trait Finder
      */
     public function findJobRootPath($domain)
     {
-        return $this->findServicePath($domain).'/Jobs';
+        return $this->findDomainPath($domain).'/Jobs';
     }
 
 
@@ -429,7 +341,7 @@ trait Finder
      */
     public function findDomainJobsNamespace($domain)
     {
-        return $this->findServiceNamespace($domain).'\Jobs';
+        return $this->findDomainNamespace($domain).'\Jobs';
     }
 
     /**
@@ -441,7 +353,7 @@ trait Finder
      */
     public function findDomainJobsTestsNamespace($domain)
     {
-        return $this->findServiceNamespace($domain).'\Tests\Jobs';
+        return $this->findDomainNamespace($domain).'\Tests\Jobs';
     }
 
     /**
@@ -470,7 +382,7 @@ trait Finder
      */
     public function findJobTestPath($domain, $jobTest)
     {
-        $root = ($domain) ? $this->findServicePath($domain).'/Tests' : base_path().'/tests';
+        $root = ($domain) ? $this->findDomainPath($domain).'/Tests' : base_path().'/tests';
 
         return "$root/Jobs/$jobTest.php";
 
@@ -486,7 +398,7 @@ trait Finder
      */
     public function findControllerPath($service, $controller)
     {
-        return $this->findServicePath($service).'/Http/Controllers/'.$controller.'.php';
+        return $this->findDomainPath($service).'/Http/Controllers/'.$controller.'.php';
     }
 
     /**
@@ -498,7 +410,7 @@ trait Finder
      */
     public function findControllerNamespace($service)
     {
-        return $this->findServiceNamespace($service).'\\Http\\Controllers';
+        return $this->findDomainNamespace($service).'\\Http\\Controllers';
     }
 
     /**
@@ -523,24 +435,24 @@ trait Finder
     }
 
     /**
-     * Find the service for the given service name.
+     * Find the domain for the given domain name.
      *
-     * @param string $service
+     * @param string $domain
      *
-     * @return \MarkRady\OneARTConsole\Components\Service
+     * @return \MarkRady\OneARTConsole\Components\Domain
      */
-    public function findService($service)
+    public function findDomain($domain)
     {
         $finder = new SymfonyFinder();
-        $dirs = $finder->name($service)->in($this->findServicesRootPath())->directories();
+        $dirs = $finder->name($domain)->in($this->findServicesRootPath())->directories();
         if ($dirs->count() < 1) {
-            throw new Exception('Service "'.$service.'" could not be found.');
+            throw new Exception('Service "'.$domain.'" could not be found.');
         }
 
         foreach ($dirs as $dir) {
             $path = $dir->getRealPath();
 
-            return  new Service(Str::service($service), $path, $this->relativeFromReal($path));
+            return  new Domain(Str::domain($domain), $path, $this->relativeFromReal($path));
         }
     }
 
@@ -551,25 +463,25 @@ trait Finder
      *
      * @return \MarkRady\OneARTConsole\Components\Domain
      */
-    public function findDomain($domain)
-    {
-        $finder = new SymfonyFinder();
-        $dirs = $finder->name($domain)->in($this->findDomainsRootPath())->directories();
-        if ($dirs->count() < 1) {
-            throw new Exception('Domain "'.$domain.'" could not be found.');
-        }
+    // public function findDomain($domain)
+    // {
+    //     $finder = new SymfonyFinder();
+    //     $dirs = $finder->name($domain)->in($this->findDomainsRootPath())->directories();
+    //     if ($dirs->count() < 1) {
+    //         throw new Exception('Domain "'.$domain.'" could not be found.');
+    //     }
 
-        foreach ($dirs as $dir) {
-            $path = $dir->getRealPath();
+    //     foreach ($dirs as $dir) {
+    //         $path = $dir->getRealPath();
 
-            return  new Domain(
-                Str::service($domain),
-                $this->findDomainNamespace($domain),
-                $path,
-                $this->relativeFromReal($path)
-            );
-        }
-    }
+    //         return  new Domain(
+    //             Str::service($domain),
+    //             $this->findDomainNamespace($domain),
+    //             $path,
+    //             $this->relativeFromReal($path)
+    //         );
+    //     }
+    // }
 
     /**
      * Find the feature for the given feature name.
@@ -691,7 +603,7 @@ trait Finder
      */
     public function findModelRootPath($service)
     {
-        return $this->findServicePath($service).'/Models';
+        return $this->findDomainPath($service).'/Models';
     }
 
     /**
@@ -713,7 +625,7 @@ trait Finder
      */
     public function findPoliciesPath($domain)
     {
-        return $this->findServicePath($domain).'/Policies';
+        return $this->findDomainPath($domain).'/Policies';
     }
 
     /**
@@ -738,7 +650,7 @@ trait Finder
      */
     public function findRequestsPath($service)
     {
-        return $this->findServicePath($service).'/Http/Requests';
+        return $this->findDomainPath($service).'/Http/Requests';
     }
 
     /**
@@ -761,7 +673,7 @@ trait Finder
      */
     public function findModelNamespace($domain)
     {
-        return $this->findServiceNamespace($domain).'\\Models';
+        return $this->findDomainNamespace($domain).'\\Models';
     }
 
     /**
@@ -771,7 +683,7 @@ trait Finder
      */
     public function findPolicyNamespace($domain)
     {
-        return $this->findServiceNamespace($domain).'\\Policies';
+        return $this->findDomainNamespace($domain).'\\Policies';
     }
 
 
@@ -785,7 +697,7 @@ trait Finder
      */
     public function findRequestsNamespace($service)
     {
-        return $this->findServiceNamespace($service).'\\Http\\Requests';
+        return $this->findDomainNamespace($service).'\\Http\\Requests';
     }
 
     /**

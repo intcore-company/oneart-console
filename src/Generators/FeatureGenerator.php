@@ -57,7 +57,7 @@ class FeatureGenerator extends Generator
             basename($path),
             $path,
             $this->relativeFromReal($path),
-            ($domain) ? $this->findService($domain) : null,
+            ($domain) ? $this->findDomain($domain) : null,
             $content
         );
     }

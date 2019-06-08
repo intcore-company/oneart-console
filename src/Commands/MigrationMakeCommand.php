@@ -25,17 +25,17 @@ class MigrationMakeCommand extends SymfonyCommand
      *
      * @var string
      */
-    protected $description = 'Create a new Migration class in a service';
+    protected $description = 'Create a new Migration class in a domain';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $service = $this->argument('service');
+        $domain = $this->argument('domain');
         $migration = $this->argument('migration');
 
-        $path = $this->relativeFromReal($this->findServicePath($service) . "/database/migrations");
+        $path = $this->relativeFromReal($this->findDomainPath($domain) . "/database/migrations");
 
         $output = shell_exec('php artisan make:migration '.$migration.' --path='.$path);
 
@@ -52,7 +52,7 @@ class MigrationMakeCommand extends SymfonyCommand
     {
         return [
             ['migration', InputArgument::REQUIRED, 'The migration\'s name.'],
-            ['service', InputArgument::REQUIRED, 'The service in which the migration should be generated.'],
+            ['domain', InputArgument::REQUIRED, 'The domain in which the migration should be generated.'],
         ];
     }
 }

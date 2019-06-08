@@ -1,7 +1,9 @@
 <?php
 
 namespace MarkRady\OneARTConsole\Components;
-
+/**
+ * @DEPRICATED
+ */
 class Service extends Component
 {
     public function __construct($name, $realPath, $relativePath)

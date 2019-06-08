@@ -102,6 +102,8 @@ class ServiceGenerator extends Generator
         $this->createRegistrationServiceProvider($name, $path, $slug, $namespace);
 
         $this->createRouteServiceProvider($name, $path, $slug, $namespace);
+
+        $this->createAuthServiceProvider($name, $path, $slug, $namespace);
     }
 
     /**
@@ -145,6 +147,31 @@ class ServiceGenerator extends Generator
 
         $this->createFile($path.'/Providers/RouteServiceProvider.php', $content);
     }
+
+
+    /**
+     * Create the auth service provider file.
+     *
+     * @param  string $name
+     * @param  string $path
+     * @param  string $slug
+     * @param  string $namespace
+     */
+    public function createAuthServiceProvider($name, $path, $slug, $namespace)
+    {
+        $serviceNamespace = $this->findServiceNamespace($name);
+
+        $content = file_get_contents(__DIR__.'/stubs/authserviceprovider.stub');
+        $content = str_replace(
+            ['{{name}}', '{{namespace}}'],
+            [$name, $namespace],
+            $content
+        );
+
+        $this->createFile($path.'/Providers/AuthServiceProvider.php', $content);
+    }
+
+
 
      /**
      * Add the routes files.

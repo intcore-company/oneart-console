@@ -470,7 +470,10 @@ trait Finder
      */
     public function findJobTestPath($domain, $jobTest)
     {
-        return $this->findServicesRootPath($domain).DS.'Jobs'.DS.$jobTest.'.php';
+        $root = ($domain) ? $this->findServicePath($domain).'/Tests' : base_path().'/tests';
+
+        return "$root/Jobs/$jobTest.php";
+
     }
 
     /**
@@ -771,7 +774,7 @@ trait Finder
         return $this->findServiceNamespace($domain).'\\Policies';
     }
 
-    
+
 
     /**
      * Get the requests namespace for the service passed in.

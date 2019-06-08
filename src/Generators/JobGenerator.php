@@ -24,7 +24,7 @@ class JobGenerator extends Generator
         }
 
         // Make sure the domain directory exists
-        $this->createDomainDirectory($domain);
+        // $this->createDomainDirectory($domain);
 
         // Create the job
         $namespace = $this->findDomainJobsNamespace($domain);

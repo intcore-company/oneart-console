@@ -29,7 +29,9 @@ $commands = [
     new MarkRady\OneARTConsole\Commands\ModelMakeCommand(),
     new MarkRady\OneARTConsole\Commands\RequestMakeCommand(),
     new MarkRady\OneARTConsole\Commands\PolicyMakeCommand(),
-
+    new MarkRady\OneARTConsole\Commands\MailMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\NotificationMakeCommand(),
+    
 ];
 
 $app = new Symfony\Component\Console\Application('OneART Console', '0.1');

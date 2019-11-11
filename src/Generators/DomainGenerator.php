@@ -5,6 +5,7 @@ namespace MarkRady\OneARTConsole\Generators;
 use Exception;
 use MarkRady\OneARTConsole\Components\Domain;
 use MarkRady\OneARTConsole\Str;
+use Illuminate\Support\Str as StrHelper;
 
 class DomainGenerator extends Generator
 {
@@ -37,7 +38,7 @@ class DomainGenerator extends Generator
     public function generate($name)
     {
         $name = Str::domain($name);
-        $slug = snake_case($name);
+        $slug = StrHelper::snake($name);
         $path = $this->findDomainPath($name);
 
         if ($this->exists($path)) {

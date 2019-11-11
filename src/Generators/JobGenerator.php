@@ -5,6 +5,7 @@ namespace MarkRady\OneARTConsole\Generators;
 use Exception;
 use MarkRady\OneARTConsole\Str;
 use MarkRady\OneARTConsole\Components\Job;
+use Illuminate\Support\Str as StrHelper;
 
 class JobGenerator extends Generator
 {
@@ -63,7 +64,7 @@ class JobGenerator extends Generator
 
         $content = str_replace(
             ['{{namespace}}', '{{testclass}}', '{{job}}', '{{job_namespace}}'],
-            [$namespace, $testClass, snake_case($job), $jobNamespace],
+            [$namespace, $testClass, StrHelper::snake($job), $jobNamespace],
             $content
         );
 

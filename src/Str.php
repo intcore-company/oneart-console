@@ -2,6 +2,7 @@
 
 
 namespace MarkRady\OneARTConsole;
+use Illuminate\Support\Str as StrHelper;
 
 class Str
 {
@@ -36,7 +37,7 @@ class Str
      */
     public static function feature($name)
     {
-        return studly_case(preg_replace('/Feature(\.php)?$/', '', $name).'Feature');
+        return StrHelper::studly(preg_replace('/Feature(\.php)?$/', '', $name).'Feature');
     }
 
     /**
@@ -52,7 +53,7 @@ class Str
      */
     public static function job($name)
     {
-        return studly_case(preg_replace('/Job(\.php)?$/', '', $name).'Job');
+        return StrHelper::studly(preg_replace('/Job(\.php)?$/', '', $name).'Job');
     }
 
     /**
@@ -68,7 +69,7 @@ class Str
      */
     public static function operation($name)
     {
-        return studly_case(preg_replace('/Operation(\.php)?$/', '', $name).'Operation');
+        return StrHelper::studly(preg_replace('/Operation(\.php)?$/', '', $name).'Operation');
     }
 
     /**
@@ -81,7 +82,7 @@ class Str
      */
     public static function service($name)
     {
-        return studly_case($name);
+        return StrHelper::studly($name);
     }
 
     /**
@@ -93,7 +94,7 @@ class Str
      */
     public static function domain($name)
     {
-        return studly_case($name);
+        return StrHelper::studly($name);
     }
 
 
@@ -107,7 +108,7 @@ class Str
      */
     public static function controller($name)
     {
-        return studly_case(preg_replace('/Controller(\.php)?$/', '', $name).'Controller');
+        return StrHelper::studly(preg_replace('/Controller(\.php)?$/', '', $name).'Controller');
     }
 
     /**
@@ -121,7 +122,7 @@ class Str
      */
     public static function model($name)
     {
-        return studly_case($name);
+        return StrHelper::studly($name);
     }
 
     /**
@@ -132,7 +133,7 @@ class Str
      */
     public static function policy($name)
     {
-        return studly_case(preg_replace('/Policy(\.php)?$/', '', $name) . 'Policy');
+        return StrHelper::studly(preg_replace('/Policy(\.php)?$/', '', $name) . 'Policy');
     }
 
     /**
@@ -143,6 +144,6 @@ class Str
      */
     public static function request($name)
     {
-        return studly_case(preg_replace('/Request(\.php)?$/', '', $name) . 'Request');
+        return StrHelper::studly(preg_replace('/Request(\.php)?$/', '', $name) . 'Request');
     }
 }

@@ -41,7 +41,7 @@ class DomainMakeCommand extends SymfonyCommand
      *
      * @var string
      */
-    protected $description = 'Create a new Service';
+    protected $description = 'Create a new domain';
 
     /**
      * Get the stub file for the generator.

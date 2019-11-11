@@ -3,6 +3,7 @@
 namespace MarkRady\OneARTConsole\Components;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Str as StrHelper;
 
 class Domain extends Component
 {
@@ -10,7 +11,7 @@ class Domain extends Component
     {
         $this->setAttributes([
             'name' => $name,
-            'slug' => snake_case($name),
+            'slug' => StrHelper::snake($name),
             'realPath' => $realPath,
             'relativePath' => $relativePath,
         ]);

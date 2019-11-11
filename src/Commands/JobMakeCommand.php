@@ -10,6 +10,7 @@ use MarkRady\OneARTConsole\Str;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Illuminate\Support\Str as StrHelper;
 
 class JobMakeCommand extends SymfonyCommand
 {
@@ -47,7 +48,7 @@ class JobMakeCommand extends SymfonyCommand
     {
         $generator = new JobGenerator();
 
-        $domain = studly_case($this->argument('domain'));
+        $domain = StrHelper::studly($this->argument('domain'));
         $title = $this->parseName($this->argument('job'));
         $isQueueable = $this->option('queue');
         try {

@@ -10,6 +10,7 @@ use MarkRady\OneARTConsole\Components\Service;
 use MarkRady\OneARTConsole\Components\Domain;
 use MarkRady\OneARTConsole\Components\Job;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
+use Illuminate\Support\Str as StrHelper;
 
 define('DS', DIRECTORY_SEPARATOR);
 
@@ -170,6 +171,19 @@ trait Finder
     public function findServicesRootPath()
     {
         return $this->findSourceRoot().'/Domains';
+    }
+
+    /**
+     * Find the namespace for the given service name.
+     *
+     * @param string $service
+     *
+     * @return string
+     */
+    public function findServiceNamespace($service)
+    {
+        $root = $this->findRootNamespace();
+        return (!$service) ? $root : "$root\\Domains\\$service";
     }
 
     /**

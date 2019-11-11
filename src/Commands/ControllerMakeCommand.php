@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use MarkRady\OneARTConsole\Generators\ControllerGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
+use Illuminate\Support\Str as StrHelper;
 
 class ControllerMakeCommand extends SymfonyCommand
 {
@@ -97,7 +98,7 @@ class ControllerMakeCommand extends SymfonyCommand
      */
     protected function parseName($name)
     {
-        return studly_case(preg_replace('/Controller(\.php)?$/', '', $name).'Controller');
+        return StrHelper::studly(preg_replace('/Controller(\.php)?$/', '', $name).'Controller');
     }
 
     /**

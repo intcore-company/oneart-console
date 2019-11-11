@@ -65,6 +65,11 @@ class JobMakeCommand extends SymfonyCommand
         }
     }
 
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
     public function getArguments()
     {
         return [
@@ -73,6 +78,11 @@ class JobMakeCommand extends SymfonyCommand
         ];
     }
 
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
     public function getOptions()
     {
         return [

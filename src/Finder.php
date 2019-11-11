@@ -752,4 +752,83 @@ trait Finder
     {
         return app()['path.config'].'/'.$name.'.php';
     }
+
+    /**
+     * Find the path for the given mail name.
+     *
+     * @param  string$domain
+     * @param  string$mail
+     *
+     * @return string
+     */
+    public function findMailPath($domain, $mail)
+    {
+        return $this->findMailRootPath($domain)."/$mail.php";
+
+    }
+
+    /**
+     * Find the mail root path in the given domain.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findMailRootPath($domain)
+    {
+        return $this->findDomainPath($domain).'/Mails';
+    }
+
+    /**
+     * Find the namespace for the given domain's Mails.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findDomainMailNamespace($domain)
+    {
+        return $this->findDomainNamespace($domain).'\Mails';
+    }
+
+
+
+
+    /**
+     * Find the path for the given notification name.
+     *
+     * @param  string$domain
+     * @param  string$notification
+     *
+     * @return string
+     */
+    public function findNotificationPath($domain, $notification)
+    {
+        return $this->findNotificationRootPath($domain)."/$notification.php";
+
+    }
+
+    /**
+     * Find the notification root path in the given domain.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findNotificationRootPath($domain)
+    {
+        return $this->findDomainPath($domain).'/Notifications';
+    }
+
+    /**
+     * Find the namespace for the given domain's Notifications.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findDomainNotificationNamespace($domain)
+    {
+        return $this->findDomainNamespace($domain).'\Notifications';
+    }
 }

@@ -18,7 +18,7 @@ class NewCommand extends Command
     {
         $this
             ->setName('new')
-            ->setDescription('Create a new One-architected project')
+            ->setDescription('Create a new One-Art project')
             ->addArgument('name', InputArgument::OPTIONAL)
             ->addOption('laravel', null, InputOption::VALUE_NONE, 'Specify the Laravel version you wish to install');
     }

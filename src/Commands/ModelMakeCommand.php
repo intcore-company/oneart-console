@@ -9,12 +9,14 @@ use MarkRady\OneARTConsole\Filesystem;
 use MarkRady\OneARTConsole\Finder;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+use Illuminate\Support\Str as StrHelper;
 
 
 /**
  * Class ModelMakeCommand
  *
- * @author Bernat Jufré <info@behind.design>
+ * @author Mark Rady <me@markrady.com>
  *
  * @package MarkRady\OneARTConsole\Commands
  */
@@ -29,7 +31,7 @@ class ModelMakeCommand extends SymfonyCommand
      *
      * @var string
      */
-    protected $name = 'make:model';
+    protected $name = 'make:model {--m|migration}';
 
     /**
      * The console command description.
@@ -51,18 +53,26 @@ class ModelMakeCommand extends SymfonyCommand
      */
     public function handle()
     {
-        $generator = new ModelGenerator();
+        $modelGenerator = new ModelGenerator();
         $domain = $this->argument('domain');
         $name = $this->argument('model');
-
+        $isMigratable = $this->option('migration');
         try {
-            $model = $generator->generate($name, $domain);
+            $model = $modelGenerator->generate($name, $domain);
 
             $this->info('Model class created successfully.' .
                 "\n" .
                 "\n" .
                 'Find it at <comment>' . $model->relativePath . '</comment>' . "\n"
             );
+            if ($isMigratable) {
+                $migration = StrHelper::snake($name);
+                $migration = StrHelper::plural($migration);
+                $qualified_migration_name = "create_{$migration}_table";
+                $path = $this->relativeFromReal($this->findDomainPath($domain) . "/database/migrations");
+                $output = shell_exec('php artisan make:migration '.$qualified_migration_name.' --path='.$path);
+                $this->info($output);
+            }
         } catch (Exception $e) {
             $this->error($e->getMessage());
         }
@@ -78,6 +88,18 @@ class ModelMakeCommand extends SymfonyCommand
         return [
             ['model', InputArgument::REQUIRED, 'The Model\'s name.'],
             ['domain', InputArgument::REQUIRED, 'The Domain\'s name.']
+        ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        return [
+            ['migration', 'm', InputOption::VALUE_NONE, 'Whether to create model with migration or not.'],
         ];
     }
 

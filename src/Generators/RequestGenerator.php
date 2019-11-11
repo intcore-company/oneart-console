@@ -11,7 +11,7 @@ use MarkRady\OneARTConsole\Components\Request;
 /**
  * Class RequestGenerator
  *
- * @author Bernat Jufré <info@behind.design>
+ * @author Mark Rady <me@markrady.com>
  *
  * @package MarkRady\OneARTConsole\Generators
  */

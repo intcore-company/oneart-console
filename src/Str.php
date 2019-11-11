@@ -146,4 +146,37 @@ class Str
     {
         return StrHelper::studly(preg_replace('/Request(\.php)?$/', '', $name) . 'Request');
     }
+
+    /**
+     * Get the given name formatted as a mail.
+     *
+     * 	i.e. "Create Welcome Email", "WelcomeEmail.php", "Welcome",
+     * 	and many other forms will be transformed to "WelcomeEmail" which is
+     * 	the standard job class name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function email($name)
+    {
+        return StrHelper::studly(preg_replace('/Mails(\.php)?$/', '', $name).'Mail');
+    }
+
+    /**
+     * Get the given name formatted as a notification.
+     *
+     * 	i.e. "Create Notification Email", "NotificationEmail.php", "Notification",
+     * 	and many other forms will be transformed to "NotificationEmail" which is
+     * 	the standard job class name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function notification($name)
+    {
+        return StrHelper::studly(preg_replace('/Notifications(\.php)?$/', '', $name).'Notifications');
+    }
+    
 }

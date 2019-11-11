@@ -21,6 +21,8 @@ class DomainGenerator extends Generator
         'database/migrations/',
         'database/seeds/',
         'Http/',
+        'Mails/',
+        'Notifications/',
         'Http/Controllers/',
         'Http/Middleware/',
         'Http/Requests/',

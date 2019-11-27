@@ -42,6 +42,8 @@ class {{name}}ServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
 
+        $this->app->register(AuthServiceProvider::class);
+
         $this->registerResources();
     }
 

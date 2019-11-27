@@ -5,10 +5,8 @@ namespace MarkRady\OneARTConsole\Generators;
 use Exception;
 use MarkRady\OneARTConsole\Str;
 use MarkRady\OneARTConsole\Components\Job;
+use Illuminate\Support\Str as StrHelper;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class JobGenerator extends Generator
 {
     public function generate($job, $domain, $isQueueable = false)
@@ -24,11 +22,10 @@ class JobGenerator extends Generator
         }
 
         // Make sure the domain directory exists
-        $this->createDomainDirectory($domain);
+        // $this->createDomainDirectory($domain);
 
         // Create the job
         $namespace = $this->findDomainJobsNamespace($domain);
-
         $content = file_get_contents($this->getStub($isQueueable));
         $content = str_replace(
             ['{{job}}', '{{namespace}}', '{{foundation_namespace}}'],
@@ -46,7 +43,7 @@ class JobGenerator extends Generator
             basename($path),
             $path,
             $this->relativeFromReal($path),
-            $this->findDomain($domain),
+            ($domain) ? $this->findDomain($domain) : null,
             $content
         );
     }
@@ -67,7 +64,7 @@ class JobGenerator extends Generator
 
         $content = str_replace(
             ['{{namespace}}', '{{testclass}}', '{{job}}', '{{job_namespace}}'],
-            [$namespace, $testClass, snake_case($job), $jobNamespace],
+            [$namespace, $testClass, StrHelper::snake($job), $jobNamespace],
             $content
         );
 

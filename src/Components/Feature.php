@@ -2,12 +2,9 @@
 
 namespace MarkRady\OneARTConsole\Components;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class Feature extends Component
 {
-    public function __construct($title, $file, $realPath, $relativePath, Service $service = null, $content = '')
+    public function __construct($title, $file, $realPath, $relativePath, Domain $service = null, $content = '')
     {
         $className = str_replace(' ', '', $title).'Feature';
 

@@ -6,9 +6,6 @@ use MarkRady\OneARTConsole\Finder;
 use MarkRady\OneARTConsole\Command;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class ServicesListCommand extends SymfonyCommand
 {
     use Finder;

@@ -10,7 +10,7 @@ use MarkRady\OneARTConsole\Components\Model;
 /**
  * Class ModelGenerator
  *
- * @author Bernat Jufré <info@behind.design>
+ * @author Mark Rady <me@markrady.com>
  *
  * @package MarkRady\OneARTConsole\Generators
  */
@@ -26,7 +26,7 @@ class ModelGenerator extends Generator
     public function generate($name, $domain)
     {
         $model = Str::model($name);
-        $path = $this->findModelPath($domain, $model);
+        $path = $this->findModelPath($model, $domain);
 
         if ($this->exists($path)) {
             throw new Exception('Model already exists');
@@ -34,8 +34,7 @@ class ModelGenerator extends Generator
             return false;
         }
 
-        $namespace = $this->findModelNamespace();
-
+        $namespace = $this->findModelNamespace($domain);
         $content = file_get_contents($this->getStub());
         $content = str_replace(
             ['{{model}}', '{{namespace}}', '{{foundation_namespace}}'],
@@ -51,6 +50,7 @@ class ModelGenerator extends Generator
             basename($path),
             $path,
             $this->relativeFromReal($path),
+            $this->findDomain($domain),
             $content
         );
     }

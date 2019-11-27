@@ -4,9 +4,6 @@ namespace MarkRady\OneARTConsole;
 
 use Illuminate\Support\ServiceProvider;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class OneARTServiceProvider extends ServiceProvider
 {
     /**

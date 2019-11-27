@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 /**
  * Class RequestMakeCommand
  *
- * @author Bernat Jufré <info@behind.design>
+ * @author Mark Rady <me@markrady.com>
  *
  * @package MarkRady\OneARTConsole\Commands
  */
@@ -58,7 +58,6 @@ class RequestMakeCommand extends SymfonyCommand
 
         try {
             $request = $generator->generate($name, $service);
-
             $this->info('Request class created successfully.' .
                 "\n" .
                 "\n" .

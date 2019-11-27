@@ -19,25 +19,19 @@ if (file_exists('./bootstrap/app.php')) {
 $commands = [
     new MarkRady\OneARTConsole\Commands\ChangeSourceNamespaceCommand(),
     new MarkRady\OneARTConsole\Commands\JobMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\JobDeleteCommand(),
-    new MarkRady\OneARTConsole\Commands\ServiceMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\ServiceDeleteCommand(),
+    new MarkRady\OneARTConsole\Commands\DomainMakeCommand(),
     new MarkRady\OneARTConsole\Commands\FeatureMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\FeatureDeleteCommand(),
     new MarkRady\OneARTConsole\Commands\ControllerMakeCommand(),
     new MarkRady\OneARTConsole\Commands\MigrationMakeCommand(),
     new MarkRady\OneARTConsole\Commands\ServicesListCommand(),
     new MarkRady\OneARTConsole\Commands\FeaturesListCommand(),
 
     new MarkRady\OneARTConsole\Commands\ModelMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\ModelDeleteCommand(),
     new MarkRady\OneARTConsole\Commands\RequestMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\RequestDeleteCommand(),
     new MarkRady\OneARTConsole\Commands\PolicyMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\PolicyDeleteCommand(),
-
-    new MarkRady\OneARTConsole\Commands\OperationMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\OperationDeleteCommand(),
+    new MarkRady\OneARTConsole\Commands\MailMakeCommand(),
+    new MarkRady\OneARTConsole\Commands\NotificationMakeCommand(),
+    
 ];
 
 $app = new Symfony\Component\Console\Application('OneART Console', '0.1');

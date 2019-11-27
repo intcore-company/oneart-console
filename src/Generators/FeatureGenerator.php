@@ -12,7 +12,7 @@ class FeatureGenerator extends Generator
     public function generate($feature, $domain, array $jobs = [])
     {
         $feature = Str::feature($feature);
-        $domain = Str::service($domain);
+        $domain = Str::domain($domain);
         if (empty($domain))
             throw new Exception('domain not specified!');
 
@@ -57,7 +57,7 @@ class FeatureGenerator extends Generator
             basename($path),
             $path,
             $this->relativeFromReal($path),
-            ($domain) ? $this->findService($domain) : null,
+            ($domain) ? $this->findDomain($domain) : null,
             $content
         );
     }

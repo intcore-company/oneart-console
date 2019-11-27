@@ -6,13 +6,13 @@ namespace MarkRady\OneARTConsole\Components;
 /**
  * Class Model
  *
- * @author Bernat Jufré <info@behind.design>
+ * @author Mark Rady <me@markrady.com>
  *
  * @package MarkRady\OneARTConsole\Components
  */
 class Model extends Component
 {
-    public function __construct($title, $namespace, $file, $path, $relativePath, $content)
+    public function __construct($title, $namespace, $file, $path, $relativePath, Domain $domain, $content)
     {
         $this->setAttributes([
             'model' => $title,

@@ -3,19 +3,16 @@
 namespace MarkRady\OneARTConsole\Components;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Str as StrHelper;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class Domain extends Component
 {
-    public function __construct($name, $namespace, $path, $relativePath)
+    public function __construct($name, $realPath, $relativePath)
     {
         $this->setAttributes([
             'name' => $name,
-            'slug' => Str::studly($name),
-            'namespace' => $namespace,
-            'realPath' => $path,
+            'slug' => StrHelper::snake($name),
+            'realPath' => $realPath,
             'relativePath' => $relativePath,
         ]);
     }

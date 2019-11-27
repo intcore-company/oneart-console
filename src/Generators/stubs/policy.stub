@@ -2,7 +2,6 @@
 
 namespace {{namespace}};
 
-use App\Data\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class {{policy}}

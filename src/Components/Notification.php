@@ -2,26 +2,21 @@
 
 namespace MarkRady\OneARTConsole\Components;
 
-
-/**
- * Class Policy
- *
- * @author Mark Rady <me@markrady.com>
- *
- * @package MarkRady\OneARTConsole\Components
- */
-class Policy extends Component
+class Notification extends Component
 {
     public function __construct($title, $namespace, $file, $path, $relativePath, Domain $service, $content)
     {
+        $className = str_replace(' ', '', $title);
         $this->setAttributes([
-            'policy' => $title,
+            'title' => $title,
+            'className' => $className,
             'namespace' => $namespace,
             'file' => $file,
-            'path' => $path,
-            'service' => $service,
+            'realPath' => $path,
             'relativePath' => $relativePath,
+            'service' => $service,
             'content' => $content,
         ]);
     }
 }
+

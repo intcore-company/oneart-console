@@ -7,9 +7,6 @@
  use MarkRady\OneARTConsole\Components\Domain;
  use MarkRady\OneARTConsole\Components\Feature;
 
- /**
-  * @author Abed Halawi <abed.halawi@vinelab.com>
-  */
 class Parser
 {
     use Finder;

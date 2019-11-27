@@ -2,10 +2,8 @@
 
 
 namespace MarkRady\OneARTConsole;
+use Illuminate\Support\Str as StrHelper;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class Str
 {
     /**
@@ -39,7 +37,7 @@ class Str
      */
     public static function feature($name)
     {
-        return studly_case(preg_replace('/Feature(\.php)?$/', '', $name).'Feature');
+        return StrHelper::studly(preg_replace('/Feature(\.php)?$/', '', $name).'Feature');
     }
 
     /**
@@ -55,7 +53,7 @@ class Str
      */
     public static function job($name)
     {
-        return studly_case(preg_replace('/Job(\.php)?$/', '', $name).'Job');
+        return StrHelper::studly(preg_replace('/Job(\.php)?$/', '', $name).'Job');
     }
 
     /**
@@ -71,21 +69,20 @@ class Str
      */
     public static function operation($name)
     {
-        return studly_case(preg_replace('/Operation(\.php)?$/', '', $name).'Operation');
+        return StrHelper::studly(preg_replace('/Operation(\.php)?$/', '', $name).'Operation');
     }
 
     /**
-     * Get the given name formatted as a domain.
-     *
-     * Domain names are just CamelCase
+     * @DEPRICATED
+     * Get the given name formatted as a service name.
      *
      * @param string $name
      *
      * @return string
      */
-    public static function domain($name)
+    public static function service($name)
     {
-        return studly_case($name);
+        return StrHelper::studly($name);
     }
 
     /**
@@ -95,10 +92,12 @@ class Str
      *
      * @return string
      */
-    public static function service($name)
+    public static function domain($name)
     {
-        return studly_case($name);
+        return StrHelper::studly($name);
     }
+
+
 
     /**
      * Get the given name formatted as a controller name.
@@ -109,7 +108,7 @@ class Str
      */
     public static function controller($name)
     {
-        return studly_case(preg_replace('/Controller(\.php)?$/', '', $name).'Controller');
+        return StrHelper::studly(preg_replace('/Controller(\.php)?$/', '', $name).'Controller');
     }
 
     /**
@@ -123,7 +122,7 @@ class Str
      */
     public static function model($name)
     {
-        return studly_case($name);
+        return StrHelper::studly($name);
     }
 
     /**
@@ -134,7 +133,7 @@ class Str
      */
     public static function policy($name)
     {
-        return studly_case(preg_replace('/Policy(\.php)?$/', '', $name) . 'Policy');
+        return StrHelper::studly(preg_replace('/Policy(\.php)?$/', '', $name) . 'Policy');
     }
 
     /**
@@ -145,6 +144,39 @@ class Str
      */
     public static function request($name)
     {
-        return studly_case(preg_replace('/Request(\.php)?$/', '', $name) . 'Request');
+        return StrHelper::studly(preg_replace('/Request(\.php)?$/', '', $name) . 'Request');
     }
+
+    /**
+     * Get the given name formatted as a mail.
+     *
+     * 	i.e. "Create Welcome Email", "WelcomeEmail.php", "Welcome",
+     * 	and many other forms will be transformed to "WelcomeEmail" which is
+     * 	the standard job class name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function email($name)
+    {
+        return StrHelper::studly(preg_replace('/Mails(\.php)?$/', '', $name).'Mail');
+    }
+
+    /**
+     * Get the given name formatted as a notification.
+     *
+     * 	i.e. "Create Notification Email", "NotificationEmail.php", "Notification",
+     * 	and many other forms will be transformed to "NotificationEmail" which is
+     * 	the standard job class name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function notification($name)
+    {
+        return StrHelper::studly(preg_replace('/Notifications(\.php)?$/', '', $name).'Notifications');
+    }
+    
 }

@@ -7,8 +7,9 @@ use MarkRady\OneARTConsole\Command;
 use MarkRady\OneARTConsole\Finder;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
+use MarkRady\OneARTConsole\Generators\MailGenerator;
 
-class MigrationMakeCommand extends SymfonyCommand
+class MailMakeCommand extends SymfonyCommand
 {
     use Finder;
     use Command;
@@ -18,29 +19,37 @@ class MigrationMakeCommand extends SymfonyCommand
      *
      * @var string
      */
-    protected $name = 'make:migration';
+    protected $name = 'make:mail';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new Migration class in a domain';
+    protected $description = 'Create a new mail class in a domain';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
+        $generator = new MailGenerator();
+
         $domain = $this->argument('domain');
-        $migration = $this->argument('migration');
+        $mail = $this->argument('mail');
 
-        $path = $this->relativeFromReal($this->findDomainPath($domain) . "/database/migrations");
+        try {
+            $mailer = $generator->generate($mail, $domain);
 
-        $output = shell_exec('php artisan make:migration '.$migration.' --path='.$path);
-
-        $this->info($output);
-        $this->info("\n".'Find it at <comment>'.$path.'</comment>'."\n");
+            $this->info(
+                'Mail class '.$mailer->className.' created successfully.'.
+                "\n".
+                "\n".
+                'Find it at <comment>'.$mailer->relativePath.'</comment>'."\n"
+            );
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+        }
     }
 
     /**
@@ -51,7 +60,7 @@ class MigrationMakeCommand extends SymfonyCommand
     protected function getArguments()
     {
         return [
-            ['migration', InputArgument::REQUIRED, 'The migration\'s name.'],
+            ['mail', InputArgument::REQUIRED, 'The mail\'s name.'],
             ['domain', InputArgument::REQUIRED, 'The domain in which the migration should be generated.'],
         ];
     }

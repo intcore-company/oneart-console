@@ -9,10 +9,8 @@ use Symfony\Component\Console\Input\InputOption;
 use MarkRady\OneARTConsole\Generators\ControllerGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
+use Illuminate\Support\Str as StrHelper;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
 class ControllerMakeCommand extends SymfonyCommand
 {
     use Finder;
@@ -31,7 +29,7 @@ class ControllerMakeCommand extends SymfonyCommand
      *
      * @var string
      */
-    protected $description = 'Create a new resource Controller class in a service';
+    protected $description = 'Create a new resource Controller class in a domain';
 
     /**
      * The type of class being generated.
@@ -49,12 +47,11 @@ class ControllerMakeCommand extends SymfonyCommand
     {
         $generator = new ControllerGenerator();
 
-        $service = $this->argument('service');
+        $domain = $this->argument('domain');
         $name = $this->argument('controller');
 
         try {
-            $controller = $generator->generate($name, $service, $this->option('plain'));
-
+            $controller = $generator->generate($name, $domain, $this->option('plain'));
             $this->info('Controller class created successfully.'.
                 "\n".
                 "\n".
@@ -74,7 +71,7 @@ class ControllerMakeCommand extends SymfonyCommand
     {
         return [
             ['controller', InputArgument::REQUIRED, 'The controller\'s name.'],
-            ['service', InputArgument::OPTIONAL, 'The service in which the controller should be generated.'],
+            ['domain', InputArgument::REQUIRED, 'The domain in which the controller should be generated.'],
         ];
     }
 
@@ -101,7 +98,7 @@ class ControllerMakeCommand extends SymfonyCommand
      */
     protected function parseName($name)
     {
-        return studly_case(preg_replace('/Controller(\.php)?$/', '', $name).'Controller');
+        return StrHelper::studly(preg_replace('/Controller(\.php)?$/', '', $name).'Controller');
     }
 
     /**

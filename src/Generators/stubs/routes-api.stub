@@ -11,18 +11,27 @@
 |
 */
 
-// Prefix: /api/{{slug}}
-Route::group(['prefix' => '{{slug}}'], function() {
+// Prefix: /api/v1/{{slug}}
+Route::group(['prefix' => 'v1/{{slug}}'], function() {
 
     // The controllers live in {{controllers_path}}
     // Route::get('/', 'UserController@index');
 
     Route::get('/', function() {
-        return response()->json(['path' => '/api/{{slug}}']);
+        return response()->json(['path' => '/api/v1/{{slug}}']);
+    });
+
+    Route::group(['middleware'=>'auth:api'], function() {
+
+        Route::group(['prefix'=>'app', function() {
+
+        }]);
+
+    });
+
+    Route::group(['prefix'=>'app'], function() {
+
     });
     
-    Route::middleware('auth:api')->get('/user', function (Request $request) {
-        return $request->user();
-    });
 
 });

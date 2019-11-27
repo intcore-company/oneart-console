@@ -4,10 +4,6 @@ namespace MarkRady\OneARTConsole;
 
 use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- * @author Charalampos Raftopoulos <harris@vinelab.com>
- */
 trait Filesystem
 {
     /**

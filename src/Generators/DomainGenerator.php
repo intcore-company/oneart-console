@@ -3,16 +3,14 @@
 namespace MarkRady\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Components\Service;
+use MarkRady\OneARTConsole\Components\Domain;
 use MarkRady\OneARTConsole\Str;
+use Illuminate\Support\Str as StrHelper;
 
-/**
- * @author Abed Halawi <abed.halawi@vinelab.com>
- */
-class ServiceGenerator extends Generator
+class DomainGenerator extends Generator
 {
     /**
-     * The directories to be created under the service directory.
+     * The directories to be created under the Domain directory.
      *
      * @var array
      */
@@ -23,7 +21,12 @@ class ServiceGenerator extends Generator
         'database/migrations/',
         'database/seeds/',
         'Http/',
+        'Mails/',
+        'Notifications/',
         'Http/Controllers/',
+        'Http/Controllers/Api/',
+        'Http/Controllers/Api/V1/',
+        'Http/Controllers/Admin/',
         'Http/Middleware/',
         'Http/Requests/',
         'Providers/',
@@ -39,24 +42,24 @@ class ServiceGenerator extends Generator
 
     public function generate($name)
     {
-        $name = Str::service($name);
-        $slug = snake_case($name);
-        $path = $this->findServicePath($name);
+        $name = Str::domain($name);
+        $slug = StrHelper::snake($name);
+        $path = $this->findDomainPath($name);
 
         if ($this->exists($path)) {
-            throw new Exception('Service already exists!');
+            throw new Exception('Domain already exists!');
 
             return false;
         }
 
-        // create service directory
+        // create domain directory
         $this->createDirectory($path);
         // create .gitkeep file in it
         $this->createFile($path.'/.gitkeep');
 
-        $this->createServiceDirectories($path);
+        $this->createDomainDirectories($path);
 
-        $this->addServiceProviders($name, $slug, $path);
+        $this->addDomainProviders($name, $slug, $path);
 
         $this->addRoutesFiles($name, $slug, $path);
 
@@ -64,7 +67,7 @@ class ServiceGenerator extends Generator
 
         $this->addModelFactory($path);
 
-        return new Service(
+        return new Domain(
             $name,
             $slug,
             $path,
@@ -73,13 +76,13 @@ class ServiceGenerator extends Generator
     }
 
     /**
-     * Create the default directories at the given service path.
+     * Create the default directories at the given domain path.
      *
      * @param  string $path
      *
      * @return void
      */
-    public function createServiceDirectories($path)
+    public function createDomainDirectories($path)
     {
         foreach ($this->directories as $directory) {
             $this->createDirectory($path.'/'.$directory);
@@ -88,24 +91,26 @@ class ServiceGenerator extends Generator
     }
 
     /**
-     * Add the corresponding service provider for the created service.
+     * Add the corresponding domain provider for the created domain.
      *
      * @param string $name
      * @param string $path
      *
      * @return bool
      */
-    public function addServiceProviders($name, $slug, $path)
+    public function addDomainProviders($name, $slug, $path)
     {
-        $namespace = $this->findServiceNamespace($name).'\\Providers';
+        $namespace = $this->findDomainNamespace($name).'\\Providers';
 
         $this->createRegistrationServiceProvider($name, $path, $slug, $namespace);
 
         $this->createRouteServiceProvider($name, $path, $slug, $namespace);
+
+        $this->createAuthServiceProvider($name, $path, $slug, $namespace);
     }
 
     /**
-     * Create the service provider that registers this service.
+     * Create the domain provider that registers this domain.
      *
      * @param  string $name
      * @param  string $path
@@ -132,8 +137,8 @@ class ServiceGenerator extends Generator
      */
     public function createRouteServiceProvider($name, $path, $slug, $namespace)
     {
-        $serviceNamespace = $this->findServiceNamespace($name);
-        $controllers = $serviceNamespace.'\Http\Controllers';
+        $domainNamespace = $this->findDomainNamespace($name);
+        $controllers = $domainNamespace.'\Http\Controllers';
         $foundation = $this->findFoundationNamespace();
 
         $content = file_get_contents(__DIR__.'/stubs/routeserviceprovider.stub');
@@ -146,6 +151,31 @@ class ServiceGenerator extends Generator
         $this->createFile($path.'/Providers/RouteServiceProvider.php', $content);
     }
 
+
+    /**
+     * Create the auth service provider file.
+     *
+     * @param  string $name
+     * @param  string $path
+     * @param  string $slug
+     * @param  string $namespace
+     */
+    public function createAuthServiceProvider($name, $path, $slug, $namespace)
+    {
+        $domainNamespace = $this->findDomainNamespace($name);
+
+        $content = file_get_contents(__DIR__.'/stubs/authserviceprovider.stub');
+        $content = str_replace(
+            ['{{name}}', '{{namespace}}'],
+            [$name, $namespace],
+            $content
+        );
+
+        $this->createFile($path.'/Providers/AuthServiceProvider.php', $content);
+    }
+
+
+
      /**
      * Add the routes files.
      *
@@ -155,7 +185,7 @@ class ServiceGenerator extends Generator
      */
     public function addRoutesFiles($name, $slug, $path)
     {
-        $controllers = 'src/Services/' . $name . '/Http/Controllers';
+        $controllers = 'src/Domains/' . $name . '/Http/Controllers';
 
         $contentApi = file_get_contents(__DIR__ . '/stubs/routes-api.stub');
         $contentApi = str_replace(['{{slug}}', '{{controllers_path}}'], [$slug, $controllers], $contentApi);
@@ -180,16 +210,6 @@ class ServiceGenerator extends Generator
             $path.'/resources/views/welcome.blade.php',
             file_get_contents(__DIR__.'/stubs/welcome.blade.stub')
         );
-    }
-
-    /**
-     * Get the stub file for the generator.
-     *
-     * @return string
-     */
-    protected function getStub()
-    {
-        return __DIR__.'/stubs/service.stub';
     }
 
     /**

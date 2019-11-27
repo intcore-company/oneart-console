@@ -1,9 +1,8 @@
 <?php
 
 namespace MarkRady\OneARTConsole\Components;
-
 /**
- * @author Abed Halawi <abed.halawi@vinelab.com>
+ * @DEPRICATED
  */
 class Service extends Component
 {

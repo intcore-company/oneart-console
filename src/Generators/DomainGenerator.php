@@ -24,9 +24,6 @@ class DomainGenerator extends Generator
         'Mails/',
         'Notifications/',
         'Http/Controllers/',
-        'Http/Controllers/Api/',
-        'Http/Controllers/Api/V1/',
-        'Http/Controllers/Admin/',
         'Http/Middleware/',
         'Http/Requests/',
         'Providers/',
@@ -75,6 +72,12 @@ class DomainGenerator extends Generator
         );
     }
 
+    private function getDirectories()
+    {
+        $config_extra_dirs = config('OneART.extra_dir');
+        return array_merge($this->directories, $config_extra_dirs);
+    }
+
     /**
      * Create the default directories at the given domain path.
      *
@@ -84,7 +87,7 @@ class DomainGenerator extends Generator
      */
     public function createDomainDirectories($path)
     {
-        foreach ($this->directories as $directory) {
+        foreach ($this->getDirectories() as $directory) {
             $this->createDirectory($path.'/'.$directory);
             $this->createFile($path.'/'.$directory.'/.gitkeep');
         }

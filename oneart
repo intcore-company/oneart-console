@@ -1,5 +1,4 @@
 #!/usr/bin/env php
-#!/usr/bin/env php
 <?php
 
 if (file_exists('./vendor/autoload.php')) {
@@ -11,30 +10,30 @@ if (file_exists('./vendor/autoload.php')) {
 }
 
 if (file_exists('./bootstrap/app.php')) {
-    $laravel = require'./bootstrap/app.php';
+    $app = require'./bootstrap/app.php';
 } else {
-    $laravel = require __DIR__.'/../../../bootstrap/app.php';
+    $app = require __DIR__.'/../../../bootstrap/app.php';
 }
 
-$commands = [
-    new MarkRady\OneARTConsole\Commands\ChangeSourceNamespaceCommand(),
-    new MarkRady\OneARTConsole\Commands\JobMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\DomainMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\FeatureMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\ControllerMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\MigrationMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\ServicesListCommand(),
-    new MarkRady\OneARTConsole\Commands\FeaturesListCommand(),
 
-    new MarkRady\OneARTConsole\Commands\ModelMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\RequestMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\PolicyMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\MailMakeCommand(),
-    new MarkRady\OneARTConsole\Commands\NotificationMakeCommand(),
-    
-];
+$kernel = $app->make(MarkRady\OneARTConsole\Kernel::class);
 
-$app = new Symfony\Component\Console\Application('OneART Console', '0.1');
-array_walk($commands, [$app, 'add']);
+$status = $kernel->handle(
+    $input = new Symfony\Component\Console\Input\ArgvInput,
+    new Symfony\Component\Console\Output\ConsoleOutput
+);
 
-$app->run();
+/*
+|--------------------------------------------------------------------------
+| Shutdown The Application
+|--------------------------------------------------------------------------
+|
+| Once Artisan has finished running, we will fire off the shutdown events
+| so that any final work may be done by the application before we shut
+| down the process. This is the last thing to happen to the request.
+|
+*/
+
+$kernel->terminate($input, $status);
+
+exit($status);

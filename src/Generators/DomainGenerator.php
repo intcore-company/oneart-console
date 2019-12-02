@@ -26,6 +26,7 @@ class DomainGenerator extends Generator
         'Http/Controllers/',
         'Http/Middleware/',
         'Http/Requests/',
+        "Http/Resources/",
         'Providers/',
         'Features/',
         'resources/',

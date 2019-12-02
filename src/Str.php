@@ -178,5 +178,22 @@ class Str
     {
         return StrHelper::studly(preg_replace('/Notifications(\.php)?$/', '', $name).'Notifications');
     }
+
+    /**
+     * Get the given name formatted as a Resource.
+     *
+     * 	i.e. "Create Post Resource", "PostResource.php", "createPost",
+     * 	and many other forms will be transformed to "PostResource" which is
+     * 	the standard job class name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function resource($name, $is_collection)
+    {
+        $suffix = $is_collection ? "Collection" : "Resource";
+        return StrHelper::studly(preg_replace('/Resources(\.php)?$/', '', $name).$suffix);
+    }
     
 }

@@ -58,6 +58,7 @@ class Kernel
         \MarkRady\OneARTConsole\Commands\PolicyMakeCommand::class,
         \MarkRady\OneARTConsole\Commands\MailMakeCommand::class,
         \MarkRady\OneARTConsole\Commands\NotificationMakeCommand::class,
+        \MarkRady\OneARTConsole\Commands\ResourceMakeCommand::class,
     ];
 
     /**

@@ -23,9 +23,9 @@ Route::group(['prefix' => 'v1/{{slug}}'], function() {
 
     Route::group(['middleware'=>'auth:api'], function() {
 
-        Route::group(['prefix'=>'app', function() {
+        Route::group(['prefix'=>'app'], function() {
 
-        }]);
+        });
 
     });
 

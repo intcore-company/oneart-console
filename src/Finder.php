@@ -831,4 +831,48 @@ trait Finder
     {
         return $this->findDomainNamespace($domain).'\Notifications';
     }
+
+
+
+    
+    /**
+     * Find the path for the given resource name.
+     *
+     * @param  string $domain
+     * @param  string $resource
+     *
+     * @return string
+     */
+    public function findResourcePath($domain, $resource)
+    {
+        return $this->findResourceRootPath($domain)."/$resource.php";
+
+    }
+
+    /**
+     * Find the resource root path in the given domain.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findResourceRootPath($domain)
+    {
+        return $this->findDomainPath($domain).'/Http/Resources';
+    }
+
+    /**
+     * Find the namespace for the given domain's resource.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findDomainResourceNamespace($domain)
+    {
+        return $this->findDomainNamespace($domain).'\Http\Resources';
+    }
+
+
+
 }

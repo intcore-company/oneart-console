@@ -9,12 +9,11 @@ use Illuminate\Support\Str as StrHelper;
 
 class JobGenerator extends Generator
 {
-    public function generate($job, $domain, $isQueueable = false)
+    public function generate($name, $domain, $isQueueable = false)
     {
-        $job = Str::job($job);
+        $job_name = Str::job($name);
         $domain = Str::domain($domain);
-        $path = $this->findJobPath($domain, $job);
-
+        $path = $this->findJobPath($domain, $name);
         if ($this->exists($path)) {
             throw new Exception('Job already exists');
 
@@ -25,20 +24,20 @@ class JobGenerator extends Generator
         // $this->createDomainDirectory($domain);
 
         // Create the job
-        $namespace = $this->findDomainJobsNamespace($domain);
+        $namespace = $this->findDomainJobsNamespace($domain, $name);
         $content = file_get_contents($this->getStub($isQueueable));
         $content = str_replace(
             ['{{job}}', '{{namespace}}', '{{foundation_namespace}}'],
-            [$job, $namespace, $this->findFoundationNamespace()],
+            [$job_name, $namespace, $this->findFoundationNamespace()],
             $content
         );
 
         $this->createFile($path, $content);
 
-        $this->generateTestFile($job, $domain);
+        // $this->generateTestFile($job, $domain); // Hold for temporary reasons
 
         return new Job(
-            $job,
+            $job_name,
             $namespace,
             basename($path),
             $path,

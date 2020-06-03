@@ -14,6 +14,7 @@ class PolicyGenerator extends Generator
      * Generate the file.
      *
      * @param $name
+     * @param $domain
      * @return Policy|bool
      * @throws Exception
      */
@@ -21,7 +22,7 @@ class PolicyGenerator extends Generator
     {
         $policy = Str::policy($name);
         $domain = Str::domain($domain);
-        $path = $this->findPolicyPath($policy, $domain);
+        $path = $this->findPolicyPath($domain, $name);
 
 
         if ($this->exists($path)) {
@@ -32,7 +33,7 @@ class PolicyGenerator extends Generator
 
         $this->createPolicyDirectory($domain);
 
-        $namespace = $this->findPolicyNamespace($domain);
+        $namespace = $this->findPolicyNamespace($domain, $name);
 
         $content = file_get_contents($this->getStub());
         $content = str_replace(

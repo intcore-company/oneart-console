@@ -10,19 +10,19 @@ use MarkRady\OneARTConsole\Components\Notification;
 
 class NotificationGenerator extends Generator
 {
-    public function generate($notification, $domain)
+    public function generate($name, $domain)
     {
-        $notification = Str::notification($notification);
+        $notification = Str::notification($name);
         $domain = Str::domain($domain);
-        $path = $this->findNotificationPath($domain, $notification);
-        if ($this->exists($path)) {
+        $path = $this->findNotificationPath($domain, $name);
+        if($this->exists($path)) {
             throw new Exception('Notification already exists');
 
             return false;
         }
 
         // Create the Notification
-        $namespace = $this->findDomainNotificationNamespace($domain);
+        $namespace = $this->findDomainNotificationNamespace($domain, $name);
         $content = file_get_contents($this->getStub());
         $content = str_replace(
             ['{{notification}}', '{{namespace}}'],
@@ -44,8 +44,6 @@ class NotificationGenerator extends Generator
         );
     }
 
-
-
     /**
      * Get the stub file for the generator.
      *
@@ -53,9 +51,14 @@ class NotificationGenerator extends Generator
      */
     public function getStub($isQueueable = false)
     {
-        $stubName = '/stubs/notification.stub';
-        return __DIR__.$stubName;
-    }
+        $stubName;
+        if($isQueueable) {
+            $stubName = '/stubs/notification-queue.stub';
+        } else {
+            $stubName = '/stubs/notification.stub';
 
+        }
+        return __DIR__ . $stubName;
+    }
 
 }

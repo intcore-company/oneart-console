@@ -9,23 +9,21 @@ use MarkRady\OneARTConsole\Components\Feature;
 
 class FeatureGenerator extends Generator
 {
-    public function generate($feature, $domain, array $jobs = [])
+    public function generate($name, $domain, array $jobs = [])
     {
-        $feature = Str::feature($feature);
+        $feature_name = Str::feature($name);
         $domain = Str::domain($domain);
         if (empty($domain))
             throw new Exception('domain not specified!');
 
-        $path = $this->findFeaturePath($domain, $feature);
+        $path = $this->findFeaturePath($domain, $name);
 
         if ($this->exists($path)) {
             throw new Exception('Feature already exists!');
 
             return false;
         }
-
-        $namespace = $this->findFeatureNamespace($domain);
-
+        $namespace = $this->findFeatureNamespace($domain, $name);
         $content = file_get_contents($this->getStub());
 
         $useJobs = ''; // stores the `use` statements of the jobs
@@ -43,17 +41,17 @@ class FeatureGenerator extends Generator
 
         $content = str_replace(
             ['{{feature}}', '{{namespace}}', '{{foundation_namespace}}', '{{use_jobs}}', '{{run_jobs}}'],
-            [$feature, $namespace, $this->findFoundationNamespace(), $useJobs, $runJobs],
+            [$feature_name, $namespace, $this->findFoundationNamespace(), $useJobs, $runJobs],
             $content
         );
 
         $this->createFile($path, $content);
 
         // generate test file
-        $this->generateTestFile($feature, $domain);
+        // $this->generateTestFile($feature, $domain); // Hold for temporary reasons
 
         return new Feature(
-            $feature,
+            $feature_name,
             basename($path),
             $path,
             $this->relativeFromReal($path),

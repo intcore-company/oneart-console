@@ -6,14 +6,16 @@ use Exception;
 use MarkRady\OneARTConsole\Str;
 use MarkRady\OneARTConsole\Components\Job;
 use Illuminate\Support\Str as StrHelper;
+use MarkRady\OneARTConsole\Components\Resource;
 
 class ResourceGenerator extends Generator
 {
-    public function generate($resource, $domain, $isCollection = false)
+    public function generate($name, $domain, $isCollection = false)
     {
-        $domain = Str::domain($domain);
-        $path = $this->findResourcePath($domain, $resource);
 
+        $resource = $this->parseName($name, $isCollection);
+        $domain = Str::domain($domain);
+        $path = $this->findResourcePath($domain, $name);
         if ($this->exists($path)) {
             throw new Exception('Resource already exists');
 
@@ -24,7 +26,7 @@ class ResourceGenerator extends Generator
         $this->createDomainDirectory($domain);
 
         // Create the Resource
-        $namespace = $this->findDomainResourceNamespace($domain);
+        $namespace = $this->findDomainResourceNamespace($domain, $name);
         $content = file_get_contents($this->getStub($isCollection));
         $content = str_replace(
             ['{{resource}}', '{{namespace}}', '{{foundation_namespace}}'],
@@ -34,7 +36,7 @@ class ResourceGenerator extends Generator
 
         $this->createFile($path, $content);
 
-        return new Job(
+        return new Resource(
             $resource,
             $namespace,
             basename($path),
@@ -59,6 +61,7 @@ class ResourceGenerator extends Generator
     /**
      * Get the stub file for the generator.
      *
+     * @param bool $isCollection
      * @return string
      */
     public function getStub($isCollection = false)
@@ -70,6 +73,20 @@ class ResourceGenerator extends Generator
             $stubName = '/stubs/resource.stub';
         }
         return __DIR__.$stubName;
+    }
+
+    /**
+     * Parse the job name.
+     *  remove the Job.php suffix if found
+     *  we're adding it ourselves.
+     *
+     * @param string $name
+     * @param bool $isCollection
+     * @return string
+     */
+    protected function parseName($name, $isCollection = false)
+    {
+        return Str::resource($name, $isCollection);
     }
 
 }

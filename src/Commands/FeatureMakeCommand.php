@@ -47,7 +47,8 @@ class FeatureMakeCommand extends SymfonyCommand
     {
         try {
             $domain = $this->argument('domain');
-            $title = $this->parseName($this->argument('feature'));
+//            $title = $this->parseName($this->argument('feature'));
+            $title = $this->argument('feature');
 
             $generator = new FeatureGenerator();
             $feature = $generator->generate($title, $domain);

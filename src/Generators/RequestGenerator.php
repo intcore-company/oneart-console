@@ -28,8 +28,8 @@ class RequestGenerator extends Generator
     public function generate($name, $domain)
     {
         $request = Str::request($name);
-        $domain = Str::service($domain);
-        $path = $this->findRequestPath($domain, $request);
+        $domain = Str::domain($domain);
+        $path = $this->findRequestPath($domain, $name);
 
         if ($this->exists($path)) {
             throw new Exception('Request already exists');
@@ -37,7 +37,7 @@ class RequestGenerator extends Generator
             return false;
         }
 
-        $namespace = $this->findRequestsNamespace($domain);
+        $namespace = $this->findRequestsNamespace($domain, $name);
 
         $content = file_get_contents($this->getStub());
         $content = str_replace(

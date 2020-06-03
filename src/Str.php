@@ -2,6 +2,7 @@
 
 
 namespace MarkRady\OneARTConsole;
+
 use Illuminate\Support\Str as StrHelper;
 
 class Str
@@ -9,8 +10,8 @@ class Str
     /**
      * Determine the real name of the given name,
      * excluding the given pattern.
-     * 	i.e. the name: "CreateArticleFeature.php" with pattern '/Feature.php'
-     * 		will result in "Create Article".
+     *    i.e. the name: "CreateArticleFeature.php" with pattern '/Feature.php'
+     *        will result in "Create Article".
      *
      * @param string $name
      * @param string $pattern
@@ -27,25 +28,26 @@ class Str
     /**
      * Get the given name formatted as a feature.
      *
-     * 	i.e. "Create Post Feature", "CreatePostFeature.php", "createPost", "createe"
-     * 	and many other forms will be transformed to "CreatePostFeature" which is
-     * 	the standard feature class name.
+     *    i.e. "Create Post Feature", "CreatePostFeature.php", "createPost", "createe"
+     *    and many other forms will be transformed to "CreatePostFeature" which is
+     *    the standard feature class name.
      *
      * @param string $name
-     *
      * @return string
      */
     public static function feature($name)
     {
-        return StrHelper::studly(preg_replace('/Feature(\.php)?$/', '', $name).'Feature');
+        $name = static::getClassNameWithoutNamespace($name);
+
+        return StrHelper::studly(preg_replace('/Feature(\.php)?$/', '', $name) . 'Feature');
     }
 
     /**
      * Get the given name formatted as a job.
      *
-     * 	i.e. "Create Post Feature", "CreatePostJob.php", "createPost",
-     * 	and many other forms will be transformed to "CreatePostJob" which is
-     * 	the standard job class name.
+     *    i.e. "Create Post Feature", "CreatePostJob.php", "createPost",
+     *    and many other forms will be transformed to "CreatePostJob" which is
+     *    the standard job class name.
      *
      * @param string $name
      *
@@ -53,7 +55,9 @@ class Str
      */
     public static function job($name)
     {
-        return StrHelper::studly(preg_replace('/Job(\.php)?$/', '', $name).'Job');
+        $name = static::getClassNameWithoutNamespace($name);
+
+        return StrHelper::studly(preg_replace('/Job(\.php)?$/', '', $name) . 'Job');
     }
 
     /**
@@ -69,7 +73,7 @@ class Str
      */
     public static function operation($name)
     {
-        return StrHelper::studly(preg_replace('/Operation(\.php)?$/', '', $name).'Operation');
+        return StrHelper::studly(preg_replace('/Operation(\.php)?$/', '', $name) . 'Operation');
     }
 
     /**
@@ -97,8 +101,6 @@ class Str
         return StrHelper::studly($name);
     }
 
-
-
     /**
      * Get the given name formatted as a controller name.
      *
@@ -108,7 +110,24 @@ class Str
      */
     public static function controller($name)
     {
-        return StrHelper::studly(preg_replace('/Controller(\.php)?$/', '', $name).'Controller');
+        $name = static::getClassNameWithoutNamespace($name);
+        return StrHelper::studly(preg_replace('/Controller(\.php)?$/', '', $name) . 'Controller');
+    }
+
+    /**
+     * remove any slashes of class name | use
+     * @param string $name
+     * @return string
+     */
+    public static function getClassNameWithoutNamespace(string $name)
+    {
+        # has / decimals
+        if(count(explode('/', $name)) > 1) {
+            $namespaces = explode('/', $name);
+            $name = end($namespaces);
+        }
+
+        return $name;
     }
 
     /**
@@ -122,6 +141,8 @@ class Str
      */
     public static function model($name)
     {
+        $name = static::getClassNameWithoutNamespace($name);
+
         return StrHelper::studly($name);
     }
 
@@ -133,6 +154,8 @@ class Str
      */
     public static function policy($name)
     {
+        $name = static::getClassNameWithoutNamespace($name);
+
         return StrHelper::studly(preg_replace('/Policy(\.php)?$/', '', $name) . 'Policy');
     }
 
@@ -144,15 +167,17 @@ class Str
      */
     public static function request($name)
     {
+        $name = static::getClassNameWithoutNamespace($name);
+
         return StrHelper::studly(preg_replace('/Request(\.php)?$/', '', $name) . 'Request');
     }
 
     /**
      * Get the given name formatted as a mail.
      *
-     * 	i.e. "Create Welcome Email", "WelcomeEmail.php", "Welcome",
-     * 	and many other forms will be transformed to "WelcomeEmail" which is
-     * 	the standard job class name.
+     *    i.e. "Create Welcome Email", "WelcomeEmail.php", "Welcome",
+     *    and many other forms will be transformed to "WelcomeEmail" which is
+     *    the standard job class name.
      *
      * @param string $name
      *
@@ -160,15 +185,17 @@ class Str
      */
     public static function email($name)
     {
-        return StrHelper::studly(preg_replace('/Mails(\.php)?$/', '', $name).'Mail');
+        $name = static::getClassNameWithoutNamespace($name);
+
+        return StrHelper::studly(preg_replace('/Mails(\.php)?$/', '', $name) . 'Mail');
     }
 
     /**
      * Get the given name formatted as a notification.
      *
-     * 	i.e. "Create Notification Email", "NotificationEmail.php", "Notification",
-     * 	and many other forms will be transformed to "NotificationEmail" which is
-     * 	the standard job class name.
+     *    i.e. "Create Notification Email", "NotificationEmail.php", "Notification",
+     *    and many other forms will be transformed to "NotificationEmail" which is
+     *    the standard job class name.
      *
      * @param string $name
      *
@@ -176,24 +203,28 @@ class Str
      */
     public static function notification($name)
     {
-        return StrHelper::studly(preg_replace('/Notifications(\.php)?$/', '', $name).'Notifications');
+        $name = static::getClassNameWithoutNamespace($name);
+
+        return StrHelper::studly(preg_replace('/Notifications(\.php)?$/', '', $name) . 'Notifications');
     }
 
     /**
      * Get the given name formatted as a Resource.
      *
-     * 	i.e. "Create Post Resource", "PostResource.php", "createPost",
-     * 	and many other forms will be transformed to "PostResource" which is
-     * 	the standard job class name.
+     *    i.e. "Create Post Resource", "PostResource.php", "createPost",
+     *    and many other forms will be transformed to "PostResource" which is
+     *    the standard job class name.
      *
      * @param string $name
-     *
+     * @param $is_collection
      * @return string
      */
     public static function resource($name, $is_collection)
     {
-        $suffix = $is_collection ? "Collection" : "Resource";
-        return StrHelper::studly(preg_replace('/Resources(\.php)?$/', '', $name).$suffix);
+//        $suffix = $is_collection ? "Collection" : "Resource";
+//        $name .= $suffix;
+        $name = static::getClassNameWithoutNamespace($name);
+        return StrHelper::studly(preg_replace('/Resources(\.php)?$/', '', $name));
     }
-    
+
 }

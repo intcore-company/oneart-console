@@ -16,11 +16,14 @@ class DomainGenerator extends Generator
      */
     protected $directories = [
         'Console/',
+        'config/',
         'database/',
         'database/factories/',
         'database/migrations/',
         'database/seeds/',
         'Http/',
+        'Enum/',
+        'Repositories/',
         'Mails/',
         'Notifications/',
         'Http/Controllers/',
@@ -61,9 +64,11 @@ class DomainGenerator extends Generator
 
         $this->addRoutesFiles($name, $slug, $path);
 
-        $this->addWelcomeViewFile($path);
+        $this->addConfigFile($name, $slug, $path);
 
-        $this->addModelFactory($path);
+        // $this->addWelcomeViewFile($path);
+
+        // $this->addModelFactory($path);
 
         return new Domain(
             $name,
@@ -107,6 +112,8 @@ class DomainGenerator extends Generator
         $namespace = $this->findDomainNamespace($name).'\\Providers';
 
         $this->createRegistrationServiceProvider($name, $path, $slug, $namespace);
+        
+        $this->createRepositoryServiceProvider($name, $path, $slug, $namespace);
 
         $this->createRouteServiceProvider($name, $path, $slug, $namespace);
 
@@ -123,13 +130,34 @@ class DomainGenerator extends Generator
     {
         $content = file_get_contents(__DIR__.'/stubs/serviceprovider.stub');
         $content = str_replace(
-            ['{{name}}', '{{slug}}', '{{namespace}}'],
-            [$name, $slug, $namespace],
+            ['{{name}}', '{{slug}}', '{{namespace}}', '{{config_name}}'],
+            [$name, $slug, $namespace, strtolower($name)],
             $content
         );
 
         $this->createFile($path.'/Providers/'.$name.'ServiceProvider.php', $content);
     }
+
+    /**
+     * Create the domain provider that registers this domain.
+     *
+     * @param  string $name
+     * @param  string $path
+     */
+    public function createRepositoryServiceProvider($name, $path, $slug, $namespace)
+    {
+        $content = file_get_contents(__DIR__.'/stubs/repositoryserviceprovider.stub');
+
+        $content = str_replace(
+            ['{{name}}', '{{slug}}', '{{namespace}}'],
+            [$name, $slug, $namespace],
+            $content
+        );
+
+        $this->createFile($path.'/Providers/RepositoryServiceProvider.php', $content);
+    }
+
+    
 
     /**
      * Create the routes service provider file.
@@ -192,16 +220,39 @@ class DomainGenerator extends Generator
         $controllers = 'src/Domains/' . $name . '/Http/Controllers';
 
         $contentApi = file_get_contents(__DIR__ . '/stubs/routes-api.stub');
-        $contentApi = str_replace(['{{slug}}', '{{controllers_path}}'], [$slug, $controllers], $contentApi);
+        $contentApi = str_replace(['{{name}}', '{{slug}}', '{{controllers_path}}'], [$name, $slug, $controllers], $contentApi);
 
         $contentWeb = file_get_contents(__DIR__ . '/stubs/routes-web.stub');
-        $contentWeb = str_replace(['{{slug}}', '{{controllers_path}}'], [$slug, $controllers], $contentWeb);
+        $contentWeb = str_replace(['{{name}}', '{{slug}}', '{{controllers_path}}'], [$name, $slug, $controllers], $contentWeb);
 
         $this->createFile($path . '/routes/api.php', $contentApi);
         $this->createFile($path . '/routes/web.php', $contentWeb);
 
         unset($contentApi, $contentWeb);
     }
+
+
+    /**
+     * Add the config file.
+     *
+     * @param string $name
+     * @param string $slug
+     * @param string $path
+     */
+    public function addConfigFile($name, $slug, $path)
+    {
+        $config_template = file_get_contents(__DIR__ . '/stubs/config.stub');
+
+        $contentApi = str_replace(['{{name}}'], [$name], $config_template);
+
+        $config_file_name = strtolower($name);
+        $this->createFile($path . "/config/{$config_file_name}.php", $contentApi);
+
+        unset($contentApi, $contentWeb);
+    }
+
+
+    
 
     /**
      * Add the welcome view file.

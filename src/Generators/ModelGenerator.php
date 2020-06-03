@@ -20,13 +20,14 @@ class ModelGenerator extends Generator
      * Generate the file.
      *
      * @param $name
+     * @param $domain
      * @return Model|bool
      * @throws Exception
      */
     public function generate($name, $domain)
     {
         $model = Str::model($name);
-        $path = $this->findModelPath($model, $domain);
+        $path = $this->findModelPath($domain, $name);
 
         if ($this->exists($path)) {
             throw new Exception('Model already exists');
@@ -34,7 +35,8 @@ class ModelGenerator extends Generator
             return false;
         }
 
-        $namespace = $this->findModelNamespace($domain);
+        $namespace = $this->findModelNamespace($domain, $name);
+
         $content = file_get_contents($this->getStub());
         $content = str_replace(
             ['{{model}}', '{{namespace}}', '{{foundation_namespace}}'],

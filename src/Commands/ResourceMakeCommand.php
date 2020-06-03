@@ -50,7 +50,8 @@ class ResourceMakeCommand extends SymfonyCommand
 
         $domain = StrHelper::studly($this->argument('domain'));
         $isCollection = $this->option('collection');
-        $title = $this->parseName($this->argument('resource'), $isCollection);
+        $title = $this->argument('resource');
+
         try {
             $resource = $generator->generate($title, $domain, $isCollection);
 

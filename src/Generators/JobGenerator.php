@@ -1,10 +1,10 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Str;
-use MarkRady\OneARTConsole\Components\Job;
+use INTCore\OneARTConsole\Str;
+use INTCore\OneARTConsole\Components\Job;
 use Illuminate\Support\Str as StrHelper;
 
 class JobGenerator extends Generator

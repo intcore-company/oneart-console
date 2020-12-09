@@ -1,12 +1,12 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Commands;
+namespace INTCore\OneARTConsole\Commands;
 
-use MarkRady\OneARTConsole\Finder;
-use MarkRady\OneARTConsole\Command;
-use MarkRady\OneARTConsole\Filesystem;
+use INTCore\OneARTConsole\Finder;
+use INTCore\OneARTConsole\Command;
+use INTCore\OneARTConsole\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
-use MarkRady\OneARTConsole\Generators\ControllerGenerator;
+use INTCore\OneARTConsole\Generators\ControllerGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Illuminate\Support\Str as StrHelper;

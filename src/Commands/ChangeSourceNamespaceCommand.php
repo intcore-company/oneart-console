@@ -1,9 +1,9 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Commands;
+namespace INTCore\OneARTConsole\Commands;
 
-use MarkRady\OneARTConsole\Finder;
-use MarkRady\OneARTConsole\Command;
+use INTCore\OneARTConsole\Finder;
+use INTCore\OneARTConsole\Command;
 use Illuminate\Support\Composer;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputArgument;

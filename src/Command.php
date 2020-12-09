@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkRady\OneARTConsole;
+namespace INTCore\OneARTConsole;
 
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;

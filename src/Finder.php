@@ -1,14 +1,14 @@
 <?php
 
-namespace MarkRady\OneARTConsole;
+namespace INTCore\OneARTConsole;
 
 use Exception;
 use InvalidArgumentException;
 use Illuminate\Support\Collection;
-use MarkRady\OneARTConsole\Components\Feature;
-use MarkRady\OneARTConsole\Components\Service;
-use MarkRady\OneARTConsole\Components\Domain;
-use MarkRady\OneARTConsole\Components\Job;
+use INTCore\OneARTConsole\Components\Feature;
+use INTCore\OneARTConsole\Components\Service;
+use INTCore\OneARTConsole\Components\Domain;
+use INTCore\OneARTConsole\Components\Job;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Illuminate\Support\Str as StrHelper;
 
@@ -149,7 +149,7 @@ trait Finder
      */
     public function findFoundationNamespace()
     {
-        return 'MarkRady\OneARTFoundation';
+        return 'INTCore\OneARTFoundation';
     }
 
     /**
@@ -469,7 +469,7 @@ trait Finder
      *
      * @param string $domain
      *
-     * @return \MarkRady\OneARTConsole\Components\Domain
+     * @return \INTCore\OneARTConsole\Components\Domain
      */
     public function findDomain($domain)
     {
@@ -491,7 +491,7 @@ trait Finder
      *
      * @param string $domain
      *
-     * @return \MarkRady\OneARTConsole\Components\Domain
+     * @return \INTCore\OneARTConsole\Components\Domain
      */
     // public function findDomain($domain)
     // {
@@ -518,7 +518,7 @@ trait Finder
      *
      * @param string $name
      *
-     * @return \MarkRady\OneARTConsole\Components\Feature
+     * @return \INTCore\OneARTConsole\Components\Feature
      */
     public function findFeature($name)
     {
@@ -549,7 +549,7 @@ trait Finder
      *
      * @param string $name
      *
-     * @return \MarkRady\OneARTConsole\Components\Feature
+     * @return \INTCore\OneARTConsole\Components\Feature
      */
     public function findJob($name)
     {

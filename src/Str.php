@@ -1,7 +1,7 @@
 <?php
 
 
-namespace MarkRady\OneARTConsole;
+namespace INTCore\OneARTConsole;
 
 use Illuminate\Support\Str as StrHelper;
 

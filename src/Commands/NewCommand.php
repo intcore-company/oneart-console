@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Commands;
+namespace INTCore\OneARTConsole\Commands;
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Console\Command\Command;

@@ -1,11 +1,11 @@
 <?php
 
 
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Str;
-use MarkRady\OneARTConsole\Components\Policy;
+use INTCore\OneARTConsole\Str;
+use INTCore\OneARTConsole\Components\Policy;
 
 
 class PolicyGenerator extends Generator

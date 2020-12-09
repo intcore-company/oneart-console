@@ -1,10 +1,10 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Components\Domain;
-use MarkRady\OneARTConsole\Str;
+use INTCore\OneARTConsole\Components\Domain;
+use INTCore\OneARTConsole\Str;
 use Illuminate\Support\Str as StrHelper;
 
 class DomainGenerator extends Generator

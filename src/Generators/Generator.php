@@ -1,9 +1,9 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
-use MarkRady\OneARTConsole\Finder;
-use MarkRady\OneARTConsole\Filesystem;
+use INTCore\OneARTConsole\Finder;
+use INTCore\OneARTConsole\Filesystem;
 use Illuminate\Filesystem\Filesystem as IlluminateFilesystem;
 
 class Generator

@@ -1,10 +1,10 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Commands;
+namespace INTCore\OneARTConsole\Commands;
 
 use Illuminate\Support\Facades\Artisan;
-use MarkRady\OneARTConsole\Command;
-use MarkRady\OneARTConsole\Finder;
+use INTCore\OneARTConsole\Command;
+use INTCore\OneARTConsole\Finder;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 

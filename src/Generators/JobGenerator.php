@@ -34,7 +34,7 @@ class JobGenerator extends Generator
 
         $this->createFile($path, $content);
 
-        // $this->generateTestFile($job, $domain); // Hold for temporary reasons
+         $this->generateTestFile($job_name, $domain, $namespace);
 
         return new Job(
             $job_name,
@@ -52,18 +52,19 @@ class JobGenerator extends Generator
      *
      * @param string $job
      * @param string $domain
+     * @param        $job_namespace
      */
-    private function generateTestFile($job, $domain)
+    private function generateTestFile($job, $domain, $job_namespace)
     {
         $content = file_get_contents($this->getTestStub());
 
         $namespace = $this->findDomainJobsTestsNamespace($domain);
-        $jobNamespace = $this->findDomainJobsNamespace($domain)."\\$job";
+//        $jobNamespace = $this->findDomainJobsNamespace($domain)."\\$job";
         $testClass = $job.'Test';
 
         $content = str_replace(
             ['{{namespace}}', '{{testclass}}', '{{job}}', '{{job_namespace}}'],
-            [$namespace, $testClass, StrHelper::snake($job), $jobNamespace],
+            [$namespace, $testClass, StrHelper::snake($job), $job_namespace],
             $content
         );
 

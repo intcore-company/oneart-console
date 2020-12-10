@@ -13,7 +13,7 @@ use Illuminate\Translation\TranslationServiceProvider;
 class {{name}}ServiceProvider extends ServiceProvider
 {
 
-    private $configPath = __DIR__ . '/../config/{{config_name}}.php';
+    private string $configPath = __DIR__ . '/../config/{{config_name}}.php';
 
     /**
      * Bootstrap migrations and factories for:

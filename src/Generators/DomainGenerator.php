@@ -68,7 +68,7 @@ class DomainGenerator extends Generator
 
         // $this->addWelcomeViewFile($path);
 
-        // $this->addModelFactory($path);
+        $this->addModelFactory($path);
 
         return new Domain(
             $name,

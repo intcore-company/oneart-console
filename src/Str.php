@@ -61,6 +61,26 @@ class Str
     }
 
     /**
+     * Get the given name formatted as a event.
+     *
+     *    i.e. "Create Order Created Order", "OrderCreatedEvent.php", "createOrder",
+     *    and many other forms will be transformed to "OrderCreatedEvent" which is
+     *    the standard job class name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function event($name)
+    {
+        $name = static::getClassNameWithoutNamespace($name);
+
+        return StrHelper::studly(preg_replace('/Event(\.php)?$/', '', $name) . 'Event');
+    }
+
+
+
+    /**
      * Get the given name formatted as an operation.
      *
      *  i.e. "Create Post Operation", "CreatePostOperation.php", "createPost",
@@ -221,8 +241,8 @@ class Str
      */
     public static function resource($name, $is_collection)
     {
-//        $suffix = $is_collection ? "Collection" : "Resource";
-//        $name .= $suffix;
+        //        $suffix = $is_collection ? "Collection" : "Resource";
+        //        $name .= $suffix;
         $name = static::getClassNameWithoutNamespace($name);
         return StrHelper::studly(preg_replace('/Resources(\.php)?$/', '', $name));
     }

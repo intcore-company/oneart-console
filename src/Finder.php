@@ -938,4 +938,54 @@ trait Finder
         return $this->findDomainPath($domain) . '/Events';
     }
 
+
+
+    /***********************************************************************************************
+     *********************************** Listeners
+     ***********************************************************************************************/
+
+
+    /**
+     * Find the path for the given event name.
+     *
+     * @param string $domain
+     * @param string $listener
+     *
+     * @return string
+     */
+    public function findListenerPath(string $domain, string $listener)
+    {
+        return $this->findListenerRootPath($domain) . "/{$listener}Listener.php";
+
+    }
+
+    /**
+     * Find the namespace for the given domain's Jobs.
+     *
+     * @param string $domain
+     * @param string $class_path
+     * @return string
+     */
+    public function findDomainListenersNamespace(string $domain, string $class_path)
+    {
+        $completed_namespace = static::generateFullQualifiedNamespace($class_path);
+
+        return $this->findDomainNamespace($domain) . '\Listeners' . $completed_namespace;
+    }
+
+    /**
+     * Find the event root path in the given domain.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findListenerRootPath(string $domain)
+    {
+        return $this->findDomainPath($domain) . '/Listeners';
+    }
+
+
+
+
 }

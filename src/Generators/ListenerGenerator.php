@@ -3,21 +3,19 @@
 namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use INTCore\OneARTConsole\Components\Event;
+use INTCore\OneARTConsole\Components\Listener;
 use INTCore\OneARTConsole\Str;
-use INTCore\OneARTConsole\Components\Job;
-use Illuminate\Support\Str as StrHelper;
 
-class EventGenerator extends Generator
+class ListenerGenerator extends Generator
 {
     public function generate($name, $domain)
     {
-        $event = Str::event($name);
+        $listener = Str::listener($name);
         $domain = Str::domain($domain);
-        $path = $this->findEventPath($domain, $name);
+        $path = $this->findListenerPath($domain, $name);
 
         if ($this->exists($path)) {
-            throw new Exception('Event already exists');
+            throw new Exception('Listener already exists');
 
             return false;
         }
@@ -25,19 +23,19 @@ class EventGenerator extends Generator
         // Make sure the domain directory exists
         $this->createDomainDirectory($domain);
 
-        // Create the job
-        $namespace = $this->findDomainEventsNamespace($domain, $name);
+        // Create the listener
+        $namespace = $this->findDomainListenersNamespace($domain, $name);
         $content = file_get_contents($this->getStub());
         $content = str_replace(
-            ['{{event}}', '{{namespace}}'],
-            [$event, $namespace],
+            ['{{listener}}', '{{namespace}}'],
+            [$listener, $namespace],
             $content
         );
 
         $this->createFile($path, $content);
 
-        return new Event(
-            $event,
+        return new Listener(
+            $listener,
             $namespace,
             basename($path),
             $path,
@@ -54,7 +52,7 @@ class EventGenerator extends Generator
      */
     private function createDomainDirectory($domain)
     {
-        $this->createDirectory($this->findDomainPath($domain) . '/Events');
+        $this->createDirectory($this->findDomainPath($domain) . '/Listeners');
     }
 
     /**
@@ -64,7 +62,7 @@ class EventGenerator extends Generator
      */
     public function getStub()
     {
-        $stubName = '/stubs/event.stub';
+        $stubName = '/stubs/listener.stub';
         return __DIR__ . $stubName;
     }
 

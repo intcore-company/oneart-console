@@ -2,18 +2,16 @@
 
 namespace INTCore\OneARTConsole\Commands;
 
+use Illuminate\Support\Str as StrHelper;
 use INTCore\OneARTConsole\Command;
 use INTCore\OneARTConsole\Filesystem;
 use INTCore\OneARTConsole\Finder;
-use INTCore\OneARTConsole\Generators\EventGenerator;
-use INTCore\OneARTConsole\Generators\JobGenerator;
+use INTCore\OneARTConsole\Generators\ListenerGenerator;
 use INTCore\OneARTConsole\Str;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Illuminate\Support\Str as StrHelper;
 
-class EventMakeCommand extends SymfonyCommand
+class ListenerMakeCommand extends SymfonyCommand
 {
     use Finder;
     use Command;
@@ -24,21 +22,21 @@ class EventMakeCommand extends SymfonyCommand
      *
      * @var string
      */
-    protected $name = 'make:event';
+    protected $name = 'make:listener';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new event in a domain';
+    protected $description = 'Create a new listener in a domain';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Event';
+    protected $type = 'Listener';
 
     /**
      * Execute the console command.
@@ -47,19 +45,19 @@ class EventMakeCommand extends SymfonyCommand
      */
     public function handle()
     {
-        $generator = new EventGenerator();
+        $generator = new ListenerGenerator();
 
         $domain = StrHelper::studly($this->argument('domain'));
-        $title = $this->argument('event');
+        $title = $this->argument('listener');
 
         try {
-            $event = $generator->generate($title, $domain);
+            $listener = $generator->generate($title, $domain);
 
             $this->info(
                 'Event class '.$title.' created successfully.'.
                 "\n".
                 "\n".
-                'Find it at <comment>'.$event->relativePath.'</comment>'."\n"
+                'Find it at <comment>'.$listener->relativePath.'</comment>'."\n"
             );
         } catch (Exception $e) {
             $this->error($e->getMessage());
@@ -74,8 +72,8 @@ class EventMakeCommand extends SymfonyCommand
     public function getArguments()
     {
         return [
-            ['event', InputArgument::REQUIRED, 'The event\'s name.'],
-            ['domain', InputArgument::REQUIRED, 'The domain to be responsible for the event.'],
+            ['listener', InputArgument::REQUIRED, 'The listener\'s name.'],
+            ['domain', InputArgument::REQUIRED, 'The domain to be responsible for the listener.'],
         ];
     }
 
@@ -97,12 +95,12 @@ class EventMakeCommand extends SymfonyCommand
      */
     public function getStub()
     {
-        return __DIR__.'/../Generators/stubs/event.stub';
+        return __DIR__.'/../Generators/stubs/listener.stub';
     }
 
     /**
-     * Parse the event name.
-     *  remove the Event.php suffix if found
+     * Parse the listener name.
+     *  remove the listener.php suffix if found
      *  we're adding it ourselves.
      *
      * @param string $name

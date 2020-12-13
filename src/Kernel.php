@@ -59,6 +59,8 @@ class Kernel
         \INTCore\OneARTConsole\Commands\MailMakeCommand::class,
         \INTCore\OneARTConsole\Commands\NotificationMakeCommand::class,
         \INTCore\OneARTConsole\Commands\ResourceMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\EventMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\ListenerMakeCommand::class,
     ];
 
     /**

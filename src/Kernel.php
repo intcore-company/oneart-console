@@ -61,6 +61,7 @@ class Kernel
         \INTCore\OneARTConsole\Commands\ResourceMakeCommand::class,
         \INTCore\OneARTConsole\Commands\EventMakeCommand::class,
         \INTCore\OneARTConsole\Commands\ListenerMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\RepositoryMakeCommand::class,
     ];
 
     /**

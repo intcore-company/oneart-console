@@ -694,7 +694,7 @@ trait Finder
      */
     public function findRequestPath(string $domain, string $request)
     {
-        return $this->findRequestsPath($domain) ."/{$request}Request.php";
+        return $this->findRequestsPath($domain) . "/{$request}Request.php";
     }
 
     /**
@@ -778,6 +778,11 @@ trait Finder
         return app()['path.config'] . '/' . $name . '.php';
     }
 
+    /***********************************************************************************************
+     *********************************** Mail *************************************************
+     ***********************************************************************************************/
+
+
     /**
      * Find the path for the given mail name.
      *
@@ -817,6 +822,11 @@ trait Finder
 
         return $this->findDomainNamespace($domain) . '\Mails' . $completed_namespace;
     }
+
+    /***********************************************************************************************
+     *********************************** Notifications *************************************************
+     ***********************************************************************************************/
+
 
     /**
      * Find the path for the given notification name.
@@ -858,6 +868,11 @@ trait Finder
         return $this->findDomainNamespace($domain) . '\Notifications' . $completed_namespace;
     }
 
+    /***********************************************************************************************
+     *********************************** Resources *************************************************
+     ***********************************************************************************************/
+
+
     /**
      * Find the path for the given resource name.
      *
@@ -898,6 +913,11 @@ trait Finder
         return $this->findDomainNamespace($domain) . '\Http\Resources' . $completed_namespace;
     }
 
+    /***********************************************************************************************
+     *********************************** Events *************************************************
+     ***********************************************************************************************/
+
+
     /**
      * Find the path for the given event name.
      *
@@ -913,7 +933,7 @@ trait Finder
     }
 
     /**
-     * Find the namespace for the given domain's Jobs.
+     * Find the namespace for the given domain's events.
      *
      * @param string $domain
      * @param string $class_path
@@ -941,12 +961,11 @@ trait Finder
 
 
     /***********************************************************************************************
-     *********************************** Listeners
+     *********************************** Listeners *************************************************
      ***********************************************************************************************/
 
-
     /**
-     * Find the path for the given event name.
+     * Find the path for the given listener name.
      *
      * @param string $domain
      * @param string $listener
@@ -960,7 +979,7 @@ trait Finder
     }
 
     /**
-     * Find the namespace for the given domain's Jobs.
+     * Find the namespace for the given domain's listener.
      *
      * @param string $domain
      * @param string $class_path
@@ -974,7 +993,7 @@ trait Finder
     }
 
     /**
-     * Find the event root path in the given domain.
+     * Find the listener root path in the given domain.
      *
      * @param string $domain
      *
@@ -987,5 +1006,48 @@ trait Finder
 
 
 
+    /***********************************************************************************************
+     *********************************** Repository *************************************************
+     ***********************************************************************************************/
+
+    /**
+     * Find the path for the given repository name.
+     *
+     * @param string $domain
+     * @param string $repository
+     *
+     * @return string
+     */
+    public function findRepositoryPath(string $domain, string $repository)
+    {
+        return $this->findRepositoryRootPath($domain) . "/{$repository}Repository.php";
+
+    }
+
+    /**
+     * Find the namespace for the given domain's Jobs.
+     *
+     * @param string $domain
+     * @param string $class_path
+     * @return string
+     */
+    public function findDomainRepositoryNamespace(string $domain, string $class_path)
+    {
+        $completed_namespace = static::generateFullQualifiedNamespace($class_path);
+
+        return $this->findDomainNamespace($domain) . '\Repositories' . $completed_namespace;
+    }
+
+    /**
+     * Find the event root path in the given domain.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findRepositoryRootPath(string $domain)
+    {
+        return $this->findDomainPath($domain) . '/Repositories';
+    }
 
 }

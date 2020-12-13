@@ -5,8 +5,6 @@ namespace INTCore\OneARTConsole\Generators;
 use Exception;
 use INTCore\OneARTConsole\Components\Event;
 use INTCore\OneARTConsole\Str;
-use INTCore\OneARTConsole\Components\Job;
-use Illuminate\Support\Str as StrHelper;
 
 class EventGenerator extends Generator
 {

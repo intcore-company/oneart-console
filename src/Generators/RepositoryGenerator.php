@@ -3,36 +3,39 @@
 namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use INTCore\OneARTConsole\Components\Mail;
+use INTCore\OneARTConsole\Components\Repository;
 use INTCore\OneARTConsole\Str;
 
-class MailGenerator extends Generator
+class RepositoryGenerator extends Generator
 {
     public function generate($name, $domain)
     {
-        $mail = Str::email($name);
+        $repository = Str::repository($name);
         $domain = Str::domain($domain);
-        $path = $this->findMailPath($domain, $name);
+        $path = $this->findRepositoryPath($domain, $name);
+
         if ($this->exists($path)) {
-            throw new Exception('Mail already exists');
+            throw new Exception('Repository already exists');
 
             return false;
         }
 
-        // Create the mail
-        $namespace = $this->findDomainMailNamespace($domain, $name);
+        // Make sure the domain directory exists
+        $this->createDomainDirectory($domain);
+
+        // Create the job
+        $namespace = $this->findDomainRepositoryNamespace($domain, $name);
         $content = file_get_contents($this->getStub());
         $content = str_replace(
-            ['{{mail}}', '{{namespace}}'],
-            [$mail, $namespace],
+            ['{{repository}}', '{{namespace}}'],
+            [$repository, $namespace],
             $content
         );
 
         $this->createFile($path, $content);
 
-
-        return new Mail(
-            $mail,
+        return new Repository(
+            $repository,
             $namespace,
             basename($path),
             $path,
@@ -42,7 +45,6 @@ class MailGenerator extends Generator
         );
     }
 
-
     /**
      * Create domain directory.
      *
@@ -50,8 +52,7 @@ class MailGenerator extends Generator
      */
     private function createDomainDirectory($domain)
     {
-        $this->createDirectory($this->findDomainPath($domain).'/Jobs');
-        $this->createDirectory($this->findDomainTestsPath($domain).'/Jobs');
+        $this->createDirectory($this->findDomainPath($domain) . '/Repositories');
     }
 
     /**
@@ -59,10 +60,10 @@ class MailGenerator extends Generator
      *
      * @return string
      */
-    public function getStub($isQueueable = false)
+    public function getStub()
     {
-        $stubName = '/stubs/mail.stub';
-        return __DIR__.$stubName;
+        $stubName = '/stubs/repository.stub';
+        return __DIR__ . $stubName;
     }
 
 }

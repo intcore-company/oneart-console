@@ -1,12 +1,10 @@
 <?php
 
-
 namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use INTCore\OneARTConsole\Str;
 use INTCore\OneARTConsole\Components\Request;
-
+use INTCore\OneARTConsole\Str;
 
 /**
  * Class RequestGenerator

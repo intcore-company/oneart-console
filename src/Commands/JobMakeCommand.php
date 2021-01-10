@@ -1,12 +1,12 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Commands;
+namespace INTCore\OneARTConsole\Commands;
 
-use MarkRady\OneARTConsole\Command;
-use MarkRady\OneARTConsole\Filesystem;
-use MarkRady\OneARTConsole\Finder;
-use MarkRady\OneARTConsole\Generators\JobGenerator;
-use MarkRady\OneARTConsole\Str;
+use INTCore\OneARTConsole\Command;
+use INTCore\OneARTConsole\Filesystem;
+use INTCore\OneARTConsole\Finder;
+use INTCore\OneARTConsole\Generators\JobGenerator;
+use INTCore\OneARTConsole\Str;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -49,8 +49,11 @@ class JobMakeCommand extends SymfonyCommand
         $generator = new JobGenerator();
 
         $domain = StrHelper::studly($this->argument('domain'));
-        $title = $this->parseName($this->argument('job'));
+//        $title = $this->parseName($this->argument('job'));
+
+        $title = $this->argument('job');
         $isQueueable = $this->option('queue');
+
         try {
             $job = $generator->generate($title, $domain, $isQueueable);
 

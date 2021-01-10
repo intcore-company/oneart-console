@@ -4,20 +4,24 @@ namespace {{namespace}};
 
 use View;
 use Lang;
-use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+/** Using Legacy Eloquent Factory -  more info : laravel/legacy-factories **/
+use Illuminate\Database\Eloquent\Factory as EloquentFactory; 
 use Illuminate\Support\ServiceProvider;
 use {{namespace}}\RouteServiceProvider;
 use Illuminate\Translation\TranslationServiceProvider;
 
 class {{name}}ServiceProvider extends ServiceProvider
 {
+
+    private string $configPath = __DIR__ . '/../config/{{config_name}}.php';
+
     /**
      * Bootstrap migrations and factories for:
      * - `php artisan migrate` command.
      * - factory() helper.
      *
      * Previous usage:
-     * php artisan migrate --path=src/Services/{{name}}/database/migrations
+     * php artisan migrate --path=src/Domains/{{name}}/database/migrations
      * Now:
      * php artisan migrate
      *
@@ -44,6 +48,8 @@ class {{name}}ServiceProvider extends ServiceProvider
 
         $this->app->register(AuthServiceProvider::class);
 
+        $this->app->register(RepositoryServiceProvider::class);
+
         $this->registerResources();
     }
 
@@ -54,7 +60,18 @@ class {{name}}ServiceProvider extends ServiceProvider
      */
     protected function registerResources()
     {
-        // Translation must be registered ahead of adding lang namespaces
+        # Merge application and packages configurations
+        $this->mergeConfigFrom(
+            $this->configPath,
+            '{{name}}'
+        );
+
+        # Add config file to service provider publish command
+        $this->publishes([
+            $this->configPath => config_path('{{config_name}}.php'),
+        ], 'config');
+
+        # Translation must be registered ahead of adding lang namespaces
         $this->app->register(TranslationServiceProvider::class);
 
         Lang::addNamespace('{{slug}}', realpath(__DIR__.'/../resources/lang'));

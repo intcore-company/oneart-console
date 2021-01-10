@@ -1,31 +1,29 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Str;
-use MarkRady\OneARTConsole\Components\Feature;
+use INTCore\OneARTConsole\Str;
+use INTCore\OneARTConsole\Components\Feature;
 
 
 class FeatureGenerator extends Generator
 {
-    public function generate($feature, $domain, array $jobs = [])
+    public function generate($name, $domain, array $jobs = [])
     {
-        $feature = Str::feature($feature);
+        $feature_name = Str::feature($name);
         $domain = Str::domain($domain);
         if (empty($domain))
             throw new Exception('domain not specified!');
 
-        $path = $this->findFeaturePath($domain, $feature);
+        $path = $this->findFeaturePath($domain, $name);
 
         if ($this->exists($path)) {
             throw new Exception('Feature already exists!');
 
             return false;
         }
-
-        $namespace = $this->findFeatureNamespace($domain);
-
+        $namespace = $this->findFeatureNamespace($domain, $name);
         $content = file_get_contents($this->getStub());
 
         $useJobs = ''; // stores the `use` statements of the jobs
@@ -43,17 +41,17 @@ class FeatureGenerator extends Generator
 
         $content = str_replace(
             ['{{feature}}', '{{namespace}}', '{{foundation_namespace}}', '{{use_jobs}}', '{{run_jobs}}'],
-            [$feature, $namespace, $this->findFoundationNamespace(), $useJobs, $runJobs],
+            [$feature_name, $namespace, $this->findFoundationNamespace(), $useJobs, $runJobs],
             $content
         );
 
         $this->createFile($path, $content);
 
         // generate test file
-        $this->generateTestFile($feature, $domain);
+         $this->generateTestFile($feature_name, $domain, $namespace);
 
         return new Feature(
-            $feature,
+            $feature_name,
             basename($path),
             $path,
             $this->relativeFromReal($path),
@@ -68,12 +66,12 @@ class FeatureGenerator extends Generator
      * @param  string $feature
      * @param  string $domain
      */
-    private function generateTestFile($feature, $domain)
+    private function generateTestFile($feature, $domain, $feature_namespace)
     {
         $content = file_get_contents($this->getTestStub());
 
         $namespace = $this->findFeatureTestNamespace($domain);
-        $featureNamespace = $this->findFeatureNamespace($domain)."\\$feature";
+        $featureNamespace = $feature_namespace."\\$feature";
         $testClass = $feature.'Test';
 
         $content = str_replace(

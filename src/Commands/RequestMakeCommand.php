@@ -1,12 +1,12 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Commands;
+namespace INTCore\OneARTConsole\Commands;
 
 use Exception;
-use MarkRady\OneARTConsole\Generators\RequestGenerator;
-use MarkRady\OneARTConsole\Command;
-use MarkRady\OneARTConsole\Filesystem;
-use MarkRady\OneARTConsole\Finder;
+use INTCore\OneARTConsole\Generators\RequestGenerator;
+use INTCore\OneARTConsole\Command;
+use INTCore\OneARTConsole\Filesystem;
+use INTCore\OneARTConsole\Finder;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
  *
  * @author Mark Rady <me@markrady.com>
  *
- * @package MarkRady\OneARTConsole\Commands
+ * @package INTCore\OneARTConsole\Commands
  */
 class RequestMakeCommand extends SymfonyCommand
 {

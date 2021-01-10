@@ -1,11 +1,10 @@
 <?php
 
+namespace INTCore\OneARTConsole;
 
- namespace MarkRady\OneARTConsole;
-
- use MarkRady\OneARTConsole\Components\Job;
- use MarkRady\OneARTConsole\Components\Domain;
- use MarkRady\OneARTConsole\Components\Feature;
+use INTCore\OneARTConsole\Components\Job;
+use INTCore\OneARTConsole\Components\Domain;
+use INTCore\OneARTConsole\Components\Feature;
 
 class Parser
 {
@@ -18,7 +17,7 @@ class Parser
     /**
      * Get the list of jobs for the given feature.
      *
-     * @param  \MarkRady\OneARTConsole\ComponentsFeature $feature
+     * @param  \INTCore\OneARTConsole\ComponentsFeature $feature
      *
      * @return array
      */

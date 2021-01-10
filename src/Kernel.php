@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkRady\OneARTConsole;
+namespace INTCore\OneARTConsole;
 
 use Exception;
 use Illuminate\Console\Command;
@@ -45,20 +45,23 @@ class Kernel
      * @var array
      */
     protected $commands = [
-        \MarkRady\OneARTConsole\Commands\ChangeSourceNamespaceCommand::class,
-        \MarkRady\OneARTConsole\Commands\JobMakeCommand::class,
-        \MarkRady\OneARTConsole\Commands\DomainMakeCommand::class,
-        \MarkRady\OneARTConsole\Commands\FeatureMakeCommand::class,
-        \MarkRady\OneARTConsole\Commands\ControllerMakeCommand::class,
-        \MarkRady\OneARTConsole\Commands\MigrationMakeCommand::class,
-        \MarkRady\OneARTConsole\Commands\ServicesListCommand::class,
-        \MarkRady\OneARTConsole\Commands\FeaturesListCommand::class,
-        \MarkRady\OneARTConsole\Commands\ModelMakeCommand::class,
-        \MarkRady\OneARTConsole\Commands\RequestMakeCommand::class,
-        \MarkRady\OneARTConsole\Commands\PolicyMakeCommand::class,
-        \MarkRady\OneARTConsole\Commands\MailMakeCommand::class,
-        \MarkRady\OneARTConsole\Commands\NotificationMakeCommand::class,
-        \MarkRady\OneARTConsole\Commands\ResourceMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\ChangeSourceNamespaceCommand::class,
+        \INTCore\OneARTConsole\Commands\JobMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\DomainMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\FeatureMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\ControllerMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\MigrationMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\ServicesListCommand::class,
+        \INTCore\OneARTConsole\Commands\FeaturesListCommand::class,
+        \INTCore\OneARTConsole\Commands\ModelMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\RequestMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\PolicyMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\MailMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\NotificationMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\ResourceMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\EventMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\ListenerMakeCommand::class,
+        \INTCore\OneARTConsole\Commands\RepositoryMakeCommand::class,
     ];
 
     /**
@@ -349,7 +352,7 @@ class Kernel
     protected function getOneart()
     {
         if (is_null($this->oneart)) {
-            return $this->oneart = (new \MarkRady\OneARTConsole\Application($this->app, $this->events, $this->app->version()))
+            return $this->oneart = (new \INTCore\OneARTConsole\Application($this->app, $this->events, $this->app->version()))
                                 ->resolveCommands($this->commands);
         }
 

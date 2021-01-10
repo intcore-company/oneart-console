@@ -1,13 +1,13 @@
 <?php
 
 
-namespace MarkRady\OneARTConsole\Commands;
+namespace INTCore\OneARTConsole\Commands;
 
-use MarkRady\OneARTConsole\Str;
-use MarkRady\OneARTConsole\Finder;
-use MarkRady\OneARTConsole\Command;
-use MarkRady\OneARTConsole\Filesystem;
-use MarkRady\OneARTConsole\Generators\FeatureGenerator;
+use INTCore\OneARTConsole\Str;
+use INTCore\OneARTConsole\Finder;
+use INTCore\OneARTConsole\Command;
+use INTCore\OneARTConsole\Filesystem;
+use INTCore\OneARTConsole\Generators\FeatureGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
@@ -47,7 +47,8 @@ class FeatureMakeCommand extends SymfonyCommand
     {
         try {
             $domain = $this->argument('domain');
-            $title = $this->parseName($this->argument('feature'));
+//            $title = $this->parseName($this->argument('feature'));
+            $title = $this->argument('feature');
 
             $generator = new FeatureGenerator();
             $feature = $generator->generate($title, $domain);

@@ -1,12 +1,12 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Commands;
+namespace INTCore\OneARTConsole\Commands;
 
 use Exception;
-use MarkRady\OneARTConsole\Generators\ModelGenerator;
-use MarkRady\OneARTConsole\Command;
-use MarkRady\OneARTConsole\Filesystem;
-use MarkRady\OneARTConsole\Finder;
+use INTCore\OneARTConsole\Generators\ModelGenerator;
+use INTCore\OneARTConsole\Command;
+use INTCore\OneARTConsole\Filesystem;
+use INTCore\OneARTConsole\Finder;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,7 +18,7 @@ use Illuminate\Support\Str as StrHelper;
  *
  * @author Mark Rady <me@markrady.com>
  *
- * @package MarkRady\OneARTConsole\Commands
+ * @package INTCore\OneARTConsole\Commands
  */
 class ModelMakeCommand extends SymfonyCommand
 {
@@ -65,15 +65,23 @@ class ModelMakeCommand extends SymfonyCommand
                 "\n" .
                 'Find it at <comment>' . $model->relativePath . '</comment>' . "\n"
             );
-            if ($isMigratable) {
+            if($isMigratable) {
                 $migration = StrHelper::snake($name);
                 $migration = StrHelper::plural($migration);
-                $qualified_migration_name = "create_{$migration}_table";
+
+                $migration_name_to_array = explode('/', $migration);
+                $qualified_migration_name = end($migration_name_to_array);
+                $qualified_migration_name = $qualified_migration_name[0] == '_' ?
+                    ltrim($qualified_migration_name, '_') :
+                    $qualified_migration_name;
+
+                $qualified_migration_name = "create_{$qualified_migration_name}_table";
+
                 $path = $this->relativeFromReal($this->findDomainPath($domain) . "/database/migrations");
-                $output = shell_exec('php artisan make:migration '.$qualified_migration_name.' --path='.$path);
+                $output = shell_exec('php artisan make:migration ' . $qualified_migration_name . ' --path=' . $path);
                 $this->info($output);
             }
-        } catch (Exception $e) {
+        } catch(Exception $e) {
             $this->error($e->getMessage());
         }
     }

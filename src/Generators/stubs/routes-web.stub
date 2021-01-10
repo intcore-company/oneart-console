@@ -11,13 +11,8 @@
 |
 */
 
-Route::group(['prefix' => '{{slug}}'], function() {
-
-    // The controllers live in {{controllers_path}}
-    // Route::get('/', 'UserController@index');
-
-    Route::get('/', function() {
-        return view('{{slug}}::welcome');
-    });
-
+// The controllers live in {{controllers_path}}
+Route::group(['namespace' => 'Admin', 'middleware'=>'admin.auth', 'prefix' => Constants::ADMIN_BASE_URL], function() {
+    # Route::resource('/{{slug}}', '{{name}}Controller');
 });
+

@@ -15,11 +15,9 @@
 Route::group(['prefix' => 'v1/{{slug}}'], function() {
 
     // The controllers live in {{controllers_path}}
-    // Route::get('/', 'UserController@index');
+    // Route::resource('/{{slug}}', '{{name}}Controller');
 
-    Route::get('/', function() {
-        return response()->json(['path' => '/api/v1/{{slug}}']);
-    });
+    
 
     Route::group(['middleware'=>'auth:api'], function() {
 

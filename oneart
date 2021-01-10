@@ -16,7 +16,7 @@ if (file_exists('./bootstrap/app.php')) {
 }
 
 
-$kernel = $app->make(MarkRady\OneARTConsole\Kernel::class);
+$kernel = $app->make(INTCore\OneARTConsole\Kernel::class);
 
 $status = $kernel->handle(
     $input = new Symfony\Component\Console\Input\ArgvInput,

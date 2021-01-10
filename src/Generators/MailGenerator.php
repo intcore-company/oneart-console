@@ -1,20 +1,18 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Str;
-use MarkRady\OneARTConsole\Components\Job;
-use Illuminate\Support\Str as StrHelper;
-use MarkRady\OneARTConsole\Components\Mail;
+use INTCore\OneARTConsole\Components\Mail;
+use INTCore\OneARTConsole\Str;
 
 class MailGenerator extends Generator
 {
-    public function generate($mail, $domain)
+    public function generate($name, $domain)
     {
-        $mail = Str::email($mail);
+        $mail = Str::email($name);
         $domain = Str::domain($domain);
-        $path = $this->findMailPath($domain, $mail);
+        $path = $this->findMailPath($domain, $name);
         if ($this->exists($path)) {
             throw new Exception('Mail already exists');
 
@@ -22,7 +20,7 @@ class MailGenerator extends Generator
         }
 
         // Create the mail
-        $namespace = $this->findDomainMailNamespace($domain);
+        $namespace = $this->findDomainMailNamespace($domain, $name);
         $content = file_get_contents($this->getStub());
         $content = str_replace(
             ['{{mail}}', '{{namespace}}'],

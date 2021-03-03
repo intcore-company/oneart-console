@@ -1,5 +1,5 @@
 {
-    "name": "markrady/oneart-console",
+    "name": "intcore-company/oneart-console",
     "description": "The Command Line Interface for the OneART Architecture",
     "keywords": ["laravel", "intc", "mvc", "ddd", "domains", "architecture"],
     "license": "MIT",

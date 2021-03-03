@@ -1,14 +1,14 @@
 <?php
 
-namespace MarkRady\OneARTConsole;
+namespace INTCore\OneARTConsole;
 
 use Exception;
 use InvalidArgumentException;
 use Illuminate\Support\Collection;
-use MarkRady\OneARTConsole\Components\Feature;
-use MarkRady\OneARTConsole\Components\Service;
-use MarkRady\OneARTConsole\Components\Domain;
-use MarkRady\OneARTConsole\Components\Job;
+use INTCore\OneARTConsole\Components\Feature;
+use INTCore\OneARTConsole\Components\Service;
+use INTCore\OneARTConsole\Components\Domain;
+use INTCore\OneARTConsole\Components\Job;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Illuminate\Support\Str as StrHelper;
 
@@ -37,7 +37,7 @@ trait Finder
             'features' => [],
         ];
 
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $base = $file->getBaseName();
             $name = str_replace(['.php', ' '], '', $base);
 
@@ -45,10 +45,10 @@ trait Finder
 
             similar_text($query, mb_strtolower($name), $percent);
 
-            if($percent > 35) {
-                if(strpos($base, 'Feature.php')) {
+            if ($percent > 35) {
+                if (strpos($base, 'Feature.php')) {
                     $matches['features'][] = [$this->findFeature($name)->toArray(), $percent];
-                } elseif(strpos($base, 'Job.php')) {
+                } elseif (strpos($base, 'Job.php')) {
                     $matches['jobs'][] = [$this->findJob($name)->toArray(), $percent];
                 }
             }
@@ -59,7 +59,7 @@ trait Finder
         $this->sortFuzzyResults($matches['features']);
 
         $matches['features'] = $this->mapFuzzyResults($matches['features']);
-        $matches['jobs'] = array_map(function($result) {
+        $matches['jobs'] = array_map(function ($result) {
             return $result[0];
         }, $matches['jobs']);
 
@@ -75,7 +75,7 @@ trait Finder
      */
     private function sortFuzzyResults(&$results)
     {
-        return usort($results, function($resultLeft, $resultRight) {
+        return usort($results, function ($resultLeft, $resultRight) {
             return $resultLeft[1] < $resultRight[1];
         });
     }
@@ -90,7 +90,7 @@ trait Finder
      */
     private function mapFuzzyResults($results)
     {
-        return array_map(function($result) {
+        return array_map(function ($result) {
             return $result[0];
         }, $results);
     }
@@ -103,7 +103,7 @@ trait Finder
      */
     public function getSourceDirectoryName()
     {
-        if(file_exists(base_path() . '/' . $this->srcDirectoryName)) {
+        if (file_exists(base_path() . '/' . $this->srcDirectoryName)) {
             return $this->srcDirectoryName;
         }
 
@@ -133,8 +133,8 @@ trait Finder
         $composer = json_decode(file_get_contents(base_path() . '/composer.json'), true);
 
         // see which one refers to the "src/" directory
-        foreach($composer['autoload']['psr-4'] as $namespace => $directory) {
-            if($directory === $this->getSourceDirectoryName() . '/') {
+        foreach ($composer['autoload']['psr-4'] as $namespace => $directory) {
+            if ($directory === $this->getSourceDirectoryName() . '/') {
                 return trim($namespace, '\\');
             }
         }
@@ -149,7 +149,7 @@ trait Finder
      */
     public function findFoundationNamespace()
     {
-        return 'MarkRady\OneARTFoundation';
+        return 'INTCore\OneARTFoundation';
     }
 
     /**
@@ -213,27 +213,27 @@ trait Finder
     /**
      * Find the file path for the given feature.
      *
-     * @param string $service
+     * @param string $domain
      * @param string $feature
      *
      * @return string
      */
-    public function findFeaturePath($service, $feature)
+    public function findFeaturePath(string $domain, string $feature)
     {
-        return $this->findFeaturesRootPath($service) . "/$feature.php";
+        return $this->findFeaturesRootPath($domain) . "/{$feature}Feature.php";
     }
 
     /**
      * Find the test file path for the given feature.
      *
-     * @param string $service
+     * @param string $domain
      * @param string $feature
      *
      * @return string
      */
-    public function findFeatureTestPath($service, $test)
+    public function findFeatureTestPath($domain, $test)
     {
-        $root = ($service) ? $this->findDomainPath($service) . '/Tests' : base_path() . '/tests';
+        $root = ($domain) ? $this->findDomainPath($domain) . '/Tests' : base_path() . '/tests';
 
         return "$root/Features/$test.php";
     }
@@ -255,13 +255,13 @@ trait Finder
     /**
      * Find the namespace for features tests in the given service.
      *
-     * @param string $service
+     * @param string $domain
      *
      * @return string
      */
-    public function findFeatureTestNamespace($service)
+    public function findFeatureTestNamespace(string $domain)
     {
-        return $this->findDomainNamespace($service) . '\\Tests\\Features';
+        return $this->findDomainNamespace($domain) . '\\Tests\\Features';
     }
 
     /**
@@ -288,7 +288,7 @@ trait Finder
             ->directories();
 
         $domains = new Collection();
-        foreach($directories as $directory) {
+        foreach ($directories as $directory) {
             $name = $directory->getRelativePathName();
 
             $domain = new Domain(
@@ -312,10 +312,9 @@ trait Finder
      *
      * @return string
      */
-    public function findJobPath($domain, $job)
+    public function findJobPath(string $domain, string $job)
     {
-        return $this->findJobRootPath($domain) . "/$job.php";
-
+        return $this->findJobRootPath($domain) . "/{$job}Job.php";
     }
 
     /**
@@ -377,7 +376,7 @@ trait Finder
      */
     public function findDomainTestsPath($domain)
     {
-        if($this->isMicroservice()) {
+        if ($this->isMicroservice()) {
             return base_path() . DS . 'tests' . DS . 'Domains' . DS . $domain;
         }
 
@@ -410,7 +409,7 @@ trait Finder
      */
     public function findControllerPath($domain, $controller)
     {
-        return $this->findDomainPath($domain) . '/Http/Controllers/' . $controller . '.php';
+        return $this->findDomainPath($domain) . "/Http/Controllers/{$controller}Controller.php";
     }
 
     /**
@@ -428,6 +427,7 @@ trait Finder
 
     /**
      * Generate the completion of namespace for each type of classes
+     *
      * @param $path
      * @return string
      */
@@ -436,9 +436,9 @@ trait Finder
         $delimiters = explode('/', $path);
         $class_name = array_pop($delimiters);
 
-        if(count($delimiters) == 0) return '';
+        if (count($delimiters) == 0) return '';
 
-        if(count($delimiters) == 1) return '\\' . $delimiters[0];
+        if (count($delimiters) == 1) return '\\' . $delimiters[0];
 
         return '\\' . implode('\\', $delimiters);
     }
@@ -452,10 +452,10 @@ trait Finder
     {
         $services = new Collection();
 
-        if(file_exists($this->findServicesRootPath())) {
+        if (file_exists($this->findServicesRootPath())) {
             $finder = new SymfonyFinder();
 
-            foreach($finder->directories()->depth('== 0')->in($this->findServicesRootPath())->directories() as $dir) {
+            foreach ($finder->directories()->depth('== 0')->in($this->findServicesRootPath())->directories() as $dir) {
                 $realPath = $dir->getRealPath();
                 $services->push(new Service($dir->getRelativePathName(), $realPath, $this->relativeFromReal($realPath)));
             }
@@ -469,17 +469,17 @@ trait Finder
      *
      * @param string $domain
      *
-     * @return \MarkRady\OneARTConsole\Components\Domain
+     * @return \INTCore\OneARTConsole\Components\Domain
      */
     public function findDomain($domain)
     {
         $finder = new SymfonyFinder();
         $dirs = $finder->name($domain)->in($this->findServicesRootPath())->directories();
-        if($dirs->count() < 1) {
+        if ($dirs->count() < 1) {
             throw new Exception('Service "' . $domain . '" could not be found.');
         }
 
-        foreach($dirs as $dir) {
+        foreach ($dirs as $dir) {
             $path = $dir->getRealPath();
 
             return new Domain(Str::domain($domain), $path, $this->relativeFromReal($path));
@@ -491,7 +491,7 @@ trait Finder
      *
      * @param string $domain
      *
-     * @return \MarkRady\OneARTConsole\Components\Domain
+     * @return \INTCore\OneARTConsole\Components\Domain
      */
     // public function findDomain($domain)
     // {
@@ -518,16 +518,16 @@ trait Finder
      *
      * @param string $name
      *
-     * @return \MarkRady\OneARTConsole\Components\Feature
+     * @return \INTCore\OneARTConsole\Components\Feature
      */
-    public function findFeature($name)
+    public function findFeature(string $name)
     {
         $name = Str::feature($name);
         $fileName = "$name.php";
 
         $finder = new SymfonyFinder();
         $files = $finder->name($fileName)->in($this->findServicesRootPath())->files();
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $path = $file->getRealPath();
             $serviceName = strstr($file->getRelativePath(), DS, true);
             $service = $this->findService($serviceName);
@@ -549,7 +549,7 @@ trait Finder
      *
      * @param string $name
      *
-     * @return \MarkRady\OneARTConsole\Components\Feature
+     * @return \INTCore\OneARTConsole\Components\Feature
      */
     public function findJob($name)
     {
@@ -558,7 +558,7 @@ trait Finder
 
         $finder = new SymfonyFinder();
         $files = $finder->name($fileName)->in($this->findDomainsRootPath())->files();
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $path = $file->getRealPath();
             $domainName = strstr($file->getRelativePath(), DIRECTORY_SEPARATOR, true);
             $domain = $this->findDomain($domainName);
@@ -590,25 +590,25 @@ trait Finder
     {
         $services = $this->listServices();
 
-        if(!empty($serviceName)) {
-            $services = $services->filter(function($service) use ($serviceName) {
+        if (!empty($serviceName)) {
+            $services = $services->filter(function ($service) use ($serviceName) {
                 return $service->name === $serviceName || $service->slug === $serviceName;
             });
 
-            if($services->isEmpty()) {
+            if ($services->isEmpty()) {
                 throw new InvalidArgumentException('Service "' . $serviceName . '" could not be found.');
             }
         }
 
         $features = [];
-        foreach($services as $service) {
+        foreach ($services as $service) {
             $serviceFeatures = new Collection();
             $finder = new SymfonyFinder();
             $files = $finder
                 ->name('*Feature.php')
                 ->in($this->findFeaturesRootPath($service->name))
                 ->files();
-            foreach($files as $file) {
+            foreach ($files as $file) {
                 $fileName = $file->getRelativePathName();
                 $title = Str::realName($fileName, '/Feature.php/');
                 $realPath = $file->getRealPath();
@@ -639,12 +639,12 @@ trait Finder
     /**
      * Get the path to the passed model.
      *
+     * @param string $domain
      * @param string $model
      *
-     * @param $domain
      * @return string
      */
-    public function findModelPath($domain, $model)
+    public function findModelPath(string $domain, string $model)
     {
         return $this->findModelRootPath($domain) . "/$model.php";
     }
@@ -669,32 +669,32 @@ trait Finder
      */
     public function findPolicyPath(string $domain, string $policy)
     {
-        return $this->findPoliciesPath($domain) . "/$policy.php";
+        return $this->findPoliciesPath($domain) . "/{$policy}Policy.php";
     }
 
     /**
      * Get the path to the request directory of a specific service.
      *
-     * @param string $service
+     * @param string $domain
      *
      * @return string
      */
-    public function findRequestsPath($service)
+    public function findRequestsPath(string $domain)
     {
-        return $this->findDomainPath($service) . '/Http/Requests';
+        return $this->findDomainPath($domain) . '/Http/Requests';
     }
 
     /**
      * Get the path to a specific request.
      *
-     * @param string $service
+     * @param string $domain
      * @param string $request
      *
      * @return string
      */
-    public function findRequestPath($service, $request)
+    public function findRequestPath(string $domain, string $request)
     {
-        return $this->findRequestsPath($service) . '/' . $request . '.php';
+        return $this->findRequestsPath($domain) . "/{$request}Request.php";
     }
 
     /**
@@ -749,7 +749,7 @@ trait Finder
      */
     protected function relativeFromReal($path, $needle = '')
     {
-        if(!$needle) {
+        if (!$needle) {
             $needle = $this->getSourceDirectoryName() . '/';
         }
 
@@ -778,6 +778,11 @@ trait Finder
         return app()['path.config'] . '/' . $name . '.php';
     }
 
+    /***********************************************************************************************
+     *********************************** Mail *************************************************
+     ***********************************************************************************************/
+
+
     /**
      * Find the path for the given mail name.
      *
@@ -786,9 +791,9 @@ trait Finder
      *
      * @return string
      */
-    public function findMailPath($domain, $mail)
+    public function findMailPath(string $domain, string $mail)
     {
-        return $this->findMailRootPath($domain) . "/$mail.php";
+        return $this->findMailRootPath($domain) . "/{$mail}Mail.php";
 
     }
 
@@ -799,7 +804,7 @@ trait Finder
      *
      * @return string
      */
-    public function findMailRootPath($domain)
+    public function findMailRootPath(string $domain)
     {
         return $this->findDomainPath($domain) . '/Mails';
     }
@@ -818,6 +823,11 @@ trait Finder
         return $this->findDomainNamespace($domain) . '\Mails' . $completed_namespace;
     }
 
+    /***********************************************************************************************
+     *********************************** Notifications *************************************************
+     ***********************************************************************************************/
+
+
     /**
      * Find the path for the given notification name.
      *
@@ -826,9 +836,9 @@ trait Finder
      *
      * @return string
      */
-    public function findNotificationPath($domain, $notification)
+    public function findNotificationPath(string $domain, string $notification)
     {
-        return $this->findNotificationRootPath($domain) . "/$notification.php";
+        return $this->findNotificationRootPath($domain) . "/{$notification}Notification.php";
 
     }
 
@@ -839,7 +849,7 @@ trait Finder
      *
      * @return string
      */
-    public function findNotificationRootPath($domain)
+    public function findNotificationRootPath(string $domain)
     {
         return $this->findDomainPath($domain) . '/Notifications';
     }
@@ -858,6 +868,11 @@ trait Finder
         return $this->findDomainNamespace($domain) . '\Notifications' . $completed_namespace;
     }
 
+    /***********************************************************************************************
+     *********************************** Resources *************************************************
+     ***********************************************************************************************/
+
+
     /**
      * Find the path for the given resource name.
      *
@@ -866,9 +881,9 @@ trait Finder
      *
      * @return string
      */
-    public function findResourcePath($domain, $resource)
+    public function findResourcePath(string $domain, string $resource)
     {
-        return $this->findResourceRootPath($domain) . "/$resource.php";
+        return $this->findResourceRootPath($domain) . "/{$resource}.php";
 
     }
 
@@ -879,7 +894,7 @@ trait Finder
      *
      * @return string
      */
-    public function findResourceRootPath($domain)
+    public function findResourceRootPath(string $domain)
     {
         return $this->findDomainPath($domain) . '/Http/Resources';
     }
@@ -896,6 +911,143 @@ trait Finder
         $completed_namespace = static::generateFullQualifiedNamespace($class_path);
 
         return $this->findDomainNamespace($domain) . '\Http\Resources' . $completed_namespace;
+    }
+
+    /***********************************************************************************************
+     *********************************** Events *************************************************
+     ***********************************************************************************************/
+
+
+    /**
+     * Find the path for the given event name.
+     *
+     * @param string $domain
+     * @param string $event
+     *
+     * @return string
+     */
+    public function findEventPath(string $domain, string $event)
+    {
+        return $this->findEventRootPath($domain) . "/{$event}Event.php";
+
+    }
+
+    /**
+     * Find the namespace for the given domain's events.
+     *
+     * @param string $domain
+     * @param string $class_path
+     * @return string
+     */
+    public function findDomainEventsNamespace(string $domain, string $class_path)
+    {
+        $completed_namespace = static::generateFullQualifiedNamespace($class_path);
+
+        return $this->findDomainNamespace($domain) . '\Events' . $completed_namespace;
+    }
+
+    /**
+     * Find the event root path in the given domain.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findEventRootPath(string $domain)
+    {
+        return $this->findDomainPath($domain) . '/Events';
+    }
+
+
+
+    /***********************************************************************************************
+     *********************************** Listeners *************************************************
+     ***********************************************************************************************/
+
+    /**
+     * Find the path for the given listener name.
+     *
+     * @param string $domain
+     * @param string $listener
+     *
+     * @return string
+     */
+    public function findListenerPath(string $domain, string $listener)
+    {
+        return $this->findListenerRootPath($domain) . "/{$listener}Listener.php";
+
+    }
+
+    /**
+     * Find the namespace for the given domain's listener.
+     *
+     * @param string $domain
+     * @param string $class_path
+     * @return string
+     */
+    public function findDomainListenersNamespace(string $domain, string $class_path)
+    {
+        $completed_namespace = static::generateFullQualifiedNamespace($class_path);
+
+        return $this->findDomainNamespace($domain) . '\Listeners' . $completed_namespace;
+    }
+
+    /**
+     * Find the listener root path in the given domain.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findListenerRootPath(string $domain)
+    {
+        return $this->findDomainPath($domain) . '/Listeners';
+    }
+
+
+
+    /***********************************************************************************************
+     *********************************** Repository *************************************************
+     ***********************************************************************************************/
+
+    /**
+     * Find the path for the given repository name.
+     *
+     * @param string $domain
+     * @param string $repository
+     *
+     * @return string
+     */
+    public function findRepositoryPath(string $domain, string $repository)
+    {
+        return $this->findRepositoryRootPath($domain) . "/{$repository}Repository.php";
+
+    }
+
+    /**
+     * Find the namespace for the given domain's Jobs.
+     *
+     * @param string $domain
+     * @param string $class_path
+     * @return string
+     */
+    public function findDomainRepositoryNamespace(string $domain, string $class_path)
+    {
+        $completed_namespace = static::generateFullQualifiedNamespace($class_path);
+
+        return $this->findDomainNamespace($domain) . '\Repositories' . $completed_namespace;
+    }
+
+    /**
+     * Find the event root path in the given domain.
+     *
+     * @param string $domain
+     *
+     * @return string
+     */
+    public function findRepositoryRootPath(string $domain)
+    {
+        return $this->findDomainPath($domain) . '/Repositories';
     }
 
 }

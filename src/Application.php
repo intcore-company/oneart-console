@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkRady\OneARTConsole;
+namespace INTCore\OneARTConsole;
 
 use Closure;
 use Illuminate\Contracts\Console\Application as ApplicationContract;
@@ -67,7 +67,7 @@ class Application extends SymfonyApplication implements ApplicationContract
         $this->setAutoExit(false);
         $this->setCatchExceptions(false);
 
-        $this->events->dispatch(new \MarkRady\OneARTConsole\Events\OneArtStarting($this));
+        $this->events->dispatch(new \INTCore\OneARTConsole\Events\OneArtStarting($this));
 
         $this->bootstrap();
     }
@@ -82,7 +82,7 @@ class Application extends SymfonyApplication implements ApplicationContract
         );
 
         $this->events->dispatch(
-            new \MarkRady\OneARTConsole\Events\CommandStarting(
+            new \INTCore\OneARTConsole\Events\CommandStarting(
                 $commandName, $input, $output = $output ?: new ConsoleOutput
             )
         );
@@ -90,7 +90,7 @@ class Application extends SymfonyApplication implements ApplicationContract
         $exitCode = parent::run($input, $output);
 
         $this->events->dispatch(
-            new \MarkRady\OneARTConsole\Events\CommandFinished($commandName, $input, $output, $exitCode)
+            new \INTCore\OneARTConsole\Events\CommandFinished($commandName, $input, $output, $exitCode)
         );
 
         return $exitCode;

@@ -1,9 +1,9 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Commands;
+namespace INTCore\OneARTConsole\Commands;
 
-use MarkRady\OneARTConsole\Finder;
-use MarkRady\OneARTConsole\Command;
+use INTCore\OneARTConsole\Finder;
+use INTCore\OneARTConsole\Command;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
 class ServicesListCommand extends SymfonyCommand

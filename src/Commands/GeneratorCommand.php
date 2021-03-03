@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Commands;
+namespace INTCore\OneARTConsole\Commands;
 
 class GeneratorCommand extends IlluminateGeneratorCommand
 {

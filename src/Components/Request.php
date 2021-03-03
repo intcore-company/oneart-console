@@ -1,15 +1,13 @@
 <?php
 
-
-namespace MarkRady\OneARTConsole\Components;
-
+namespace INTCore\OneARTConsole\Components;
 
 /**
  * Class Request
  *
  * @author Mark Rady <me@markrady.com>
  *
- * @package MarkRady\OneARTConsole\Components
+ * @package INTCore\OneARTConsole\Components
  */
 class Request extends Component
 {

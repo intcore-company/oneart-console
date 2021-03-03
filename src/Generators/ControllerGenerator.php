@@ -1,9 +1,9 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Str;
+use INTCore\OneARTConsole\Str;
 
 class ControllerGenerator extends Generator
 {

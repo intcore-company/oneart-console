@@ -1,10 +1,10 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Str;
-use MarkRady\OneARTConsole\Components\Feature;
+use INTCore\OneARTConsole\Str;
+use INTCore\OneARTConsole\Components\Feature;
 
 
 class FeatureGenerator extends Generator
@@ -48,7 +48,7 @@ class FeatureGenerator extends Generator
         $this->createFile($path, $content);
 
         // generate test file
-        // $this->generateTestFile($feature, $domain); // Hold for temporary reasons
+         $this->generateTestFile($feature_name, $domain, $namespace);
 
         return new Feature(
             $feature_name,
@@ -66,12 +66,12 @@ class FeatureGenerator extends Generator
      * @param  string $feature
      * @param  string $domain
      */
-    private function generateTestFile($feature, $domain)
+    private function generateTestFile($feature, $domain, $feature_namespace)
     {
         $content = file_get_contents($this->getTestStub());
 
         $namespace = $this->findFeatureTestNamespace($domain);
-        $featureNamespace = $this->findFeatureNamespace($domain)."\\$feature";
+        $featureNamespace = $feature_namespace."\\$feature";
         $testClass = $feature.'Test';
 
         $content = str_replace(

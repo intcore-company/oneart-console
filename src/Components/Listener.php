@@ -2,11 +2,11 @@
 
 namespace INTCore\OneARTConsole\Components;
 
-class Resource extends Component
+class Listener extends Component
 {
     public function __construct($title, $namespace, $file, $path, $relativePath, Domain $service, $content)
     {
-        $className = str_replace(' ', '', $title).'Resource';
+        $className = str_replace(' ', '', $title).'Listener';
         $this->setAttributes([
             'title' => $title,
             'className' => $className,

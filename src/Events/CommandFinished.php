@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Events;
+namespace INTCore\OneARTConsole\Events;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

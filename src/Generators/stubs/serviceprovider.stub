@@ -4,7 +4,8 @@ namespace {{namespace}};
 
 use View;
 use Lang;
-use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+/** Using Legacy Eloquent Factory -  more info : laravel/legacy-factories **/
+use Illuminate\Database\Eloquent\Factory as EloquentFactory; 
 use Illuminate\Support\ServiceProvider;
 use {{namespace}}\RouteServiceProvider;
 use Illuminate\Translation\TranslationServiceProvider;
@@ -12,7 +13,7 @@ use Illuminate\Translation\TranslationServiceProvider;
 class {{name}}ServiceProvider extends ServiceProvider
 {
 
-    private $configPath = __DIR__ . '/../config/{{config_name}}.php';
+    private string $configPath = __DIR__ . '/../config/{{config_name}}.php';
 
     /**
      * Bootstrap migrations and factories for:
@@ -67,7 +68,7 @@ class {{name}}ServiceProvider extends ServiceProvider
 
         # Add config file to service provider publish command
         $this->publishes([
-            $this->configPath => config_path('{{name}}.php'),
+            $this->configPath => config_path('{{config_name}}.php'),
         ], 'config');
 
         # Translation must be registered ahead of adding lang namespaces

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace MarkRady\OneARTConsole;
+namespace INTCore\OneARTConsole;
 
 use Illuminate\Support\Str as StrHelper;
 
@@ -59,6 +59,45 @@ class Str
 
         return StrHelper::studly(preg_replace('/Job(\.php)?$/', '', $name) . 'Job');
     }
+
+    /**
+     * Get the given name formatted as a event.
+     *
+     *    i.e. "Create Order Created Order", "OrderCreatedEvent.php", "createOrder",
+     *    and many other forms will be transformed to "OrderCreatedEvent" which is
+     *    the standard event class name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function event($name)
+    {
+        $name = static::getClassNameWithoutNamespace($name);
+
+        return StrHelper::studly(preg_replace('/Event(\.php)?$/', '', $name) . 'Event');
+    }
+
+    /**
+     * Get the given name formatted as a listener.
+     *
+     *    i.e. "Create Order", "OrderCreatedListener.php", "createOrder",
+     *    and many other forms will be transformed to "OrderCreatedListener" which is
+     *    the standard listener class name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function listener(string $name)
+    {
+        $name = static::getClassNameWithoutNamespace($name);
+
+        return StrHelper::studly(preg_replace('/Listener(\.php)?$/', '', $name) . 'Listener');
+    }
+
+
+
 
     /**
      * Get the given name formatted as an operation.
@@ -221,10 +260,29 @@ class Str
      */
     public static function resource($name, $is_collection)
     {
-//        $suffix = $is_collection ? "Collection" : "Resource";
-//        $name .= $suffix;
+        //        $suffix = $is_collection ? "Collection" : "Resource";
+        //        $name .= $suffix;
         $name = static::getClassNameWithoutNamespace($name);
         return StrHelper::studly(preg_replace('/Resources(\.php)?$/', '', $name));
+    }
+
+
+    /**
+     * Get the given name formatted as a listener.
+     *
+     *    i.e. "User Repository", "UserRepository.php",
+     *    and many other forms will be transformed to "UserRepository" which is
+     *    the standard repository class name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public static function repository(string $name)
+    {
+        $name = static::getClassNameWithoutNamespace($name);
+
+        return StrHelper::studly(preg_replace('/Repository(\.php)?$/', '', $name) . 'Repository');
     }
 
 }

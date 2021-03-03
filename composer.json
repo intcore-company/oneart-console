@@ -7,17 +7,22 @@
         {
             "name": "Mark Rady",
             "email": "mark@intcore.net"
+
+        },
+        {
+            "name": "intcore",
+            "email": "info@intcore.com"
         }
     ],
     "autoload": {
         "psr-4": {
-            "MarkRady\\OneARTConsole\\": "src/"
+            "INTCore\\OneARTConsole\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "MarkRady\\OneARTConsole\\OneARTServiceProvider"
+                "INTCore\\OneARTConsole\\OneARTServiceProvider"
             ]
         }
     },

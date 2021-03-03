@@ -1,14 +1,13 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Components;
-
+namespace INTCore\OneARTConsole\Components;
 
 /**
  * Class Model
  *
  * @author Mark Rady <me@markrady.com>
  *
- * @package MarkRady\OneARTConsole\Components
+ * @package INTCore\OneARTConsole\Components
  */
 class Model extends Component
 {

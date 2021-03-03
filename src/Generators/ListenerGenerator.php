@@ -3,36 +3,39 @@
 namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use INTCore\OneARTConsole\Components\Mail;
+use INTCore\OneARTConsole\Components\Listener;
 use INTCore\OneARTConsole\Str;
 
-class MailGenerator extends Generator
+class ListenerGenerator extends Generator
 {
     public function generate($name, $domain)
     {
-        $mail = Str::email($name);
+        $listener = Str::listener($name);
         $domain = Str::domain($domain);
-        $path = $this->findMailPath($domain, $name);
+        $path = $this->findListenerPath($domain, $name);
+
         if ($this->exists($path)) {
-            throw new Exception('Mail already exists');
+            throw new Exception('Listener already exists');
 
             return false;
         }
 
-        // Create the mail
-        $namespace = $this->findDomainMailNamespace($domain, $name);
+        // Make sure the domain directory exists
+        $this->createDomainDirectory($domain);
+
+        // Create the listener
+        $namespace = $this->findDomainListenersNamespace($domain, $name);
         $content = file_get_contents($this->getStub());
         $content = str_replace(
-            ['{{mail}}', '{{namespace}}'],
-            [$mail, $namespace],
+            ['{{listener}}', '{{namespace}}'],
+            [$listener, $namespace],
             $content
         );
 
         $this->createFile($path, $content);
 
-
-        return new Mail(
-            $mail,
+        return new Listener(
+            $listener,
             $namespace,
             basename($path),
             $path,
@@ -42,7 +45,6 @@ class MailGenerator extends Generator
         );
     }
 
-
     /**
      * Create domain directory.
      *
@@ -50,8 +52,7 @@ class MailGenerator extends Generator
      */
     private function createDomainDirectory($domain)
     {
-        $this->createDirectory($this->findDomainPath($domain).'/Jobs');
-        $this->createDirectory($this->findDomainTestsPath($domain).'/Jobs');
+        $this->createDirectory($this->findDomainPath($domain) . '/Listeners');
     }
 
     /**
@@ -59,10 +60,10 @@ class MailGenerator extends Generator
      *
      * @return string
      */
-    public function getStub($isQueueable = false)
+    public function getStub()
     {
-        $stubName = '/stubs/mail.stub';
-        return __DIR__.$stubName;
+        $stubName = '/stubs/listener.stub';
+        return __DIR__ . $stubName;
     }
 
 }

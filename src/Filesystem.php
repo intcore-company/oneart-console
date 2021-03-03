@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkRady\OneARTConsole;
+namespace INTCore\OneARTConsole;
 
 use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
 

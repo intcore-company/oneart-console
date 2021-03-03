@@ -1,12 +1,10 @@
 <?php
 
-
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Str;
-use MarkRady\OneARTConsole\Components\Policy;
-
+use INTCore\OneARTConsole\Str;
+use INTCore\OneARTConsole\Components\Policy;
 
 class PolicyGenerator extends Generator
 {
@@ -23,7 +21,6 @@ class PolicyGenerator extends Generator
         $policy = Str::policy($name);
         $domain = Str::domain($domain);
         $path = $this->findPolicyPath($domain, $name);
-
 
         if ($this->exists($path)) {
             throw new Exception('Policy already exists');

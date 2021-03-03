@@ -1,6 +1,6 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Events;
+namespace INTCore\OneARTConsole\Events;
 
 class OneArtStarting
 {

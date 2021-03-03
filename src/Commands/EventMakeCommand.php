@@ -5,6 +5,7 @@ namespace INTCore\OneARTConsole\Commands;
 use INTCore\OneARTConsole\Command;
 use INTCore\OneARTConsole\Filesystem;
 use INTCore\OneARTConsole\Finder;
+use INTCore\OneARTConsole\Generators\EventGenerator;
 use INTCore\OneARTConsole\Generators\JobGenerator;
 use INTCore\OneARTConsole\Str;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
@@ -12,7 +13,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Support\Str as StrHelper;
 
-class JobMakeCommand extends SymfonyCommand
+class EventMakeCommand extends SymfonyCommand
 {
     use Finder;
     use Command;
@@ -23,21 +24,21 @@ class JobMakeCommand extends SymfonyCommand
      *
      * @var string
      */
-    protected $name = 'make:job {--Q|queue}';
+    protected $name = 'make:event';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new Job in a domain';
+    protected $description = 'Create a new event in a domain';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Job';
+    protected $type = 'Event';
 
     /**
      * Execute the console command.
@@ -46,22 +47,19 @@ class JobMakeCommand extends SymfonyCommand
      */
     public function handle()
     {
-        $generator = new JobGenerator();
+        $generator = new EventGenerator();
 
         $domain = StrHelper::studly($this->argument('domain'));
-//        $title = $this->parseName($this->argument('job'));
-
-        $title = $this->argument('job');
-        $isQueueable = $this->option('queue');
+        $title = $this->argument('event');
 
         try {
-            $job = $generator->generate($title, $domain, $isQueueable);
+            $event = $generator->generate($title, $domain);
 
             $this->info(
-                'Job class '.$title.' created successfully.'.
+                'Event class '.$title.' created successfully.'.
                 "\n".
                 "\n".
-                'Find it at <comment>'.$job->relativePath.'</comment>'."\n"
+                'Find it at <comment>'.$event->relativePath.'</comment>'."\n"
             );
         } catch (Exception $e) {
             $this->error($e->getMessage());
@@ -76,8 +74,8 @@ class JobMakeCommand extends SymfonyCommand
     public function getArguments()
     {
         return [
-            ['job', InputArgument::REQUIRED, 'The job\'s name.'],
-            ['domain', InputArgument::REQUIRED, 'The domain to be responsible for the job.'],
+            ['event', InputArgument::REQUIRED, 'The event\'s name.'],
+            ['domain', InputArgument::REQUIRED, 'The domain to be responsible for the event.'],
         ];
     }
 
@@ -89,7 +87,6 @@ class JobMakeCommand extends SymfonyCommand
     public function getOptions()
     {
         return [
-            ['queue', 'Q', InputOption::VALUE_NONE, 'Whether a job is queueable or not.'],
         ];
     }
 
@@ -100,12 +97,12 @@ class JobMakeCommand extends SymfonyCommand
      */
     public function getStub()
     {
-        return __DIR__.'/../Generators/stubs/job.stub';
+        return __DIR__.'/../Generators/stubs/event.stub';
     }
 
     /**
-     * Parse the job name.
-     *  remove the Job.php suffix if found
+     * Parse the event name.
+     *  remove the Event.php suffix if found
      *  we're adding it ourselves.
      *
      * @param string $name
@@ -114,6 +111,6 @@ class JobMakeCommand extends SymfonyCommand
      */
     protected function parseName($name)
     {
-        return Str::job($name);
+        return Str::event($name);
     }
 }

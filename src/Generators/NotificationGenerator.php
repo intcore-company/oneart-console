@@ -1,12 +1,10 @@
 <?php
 
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Str;
-use MarkRady\OneARTConsole\Components\Job;
-use Illuminate\Support\Str as StrHelper;
-use MarkRady\OneARTConsole\Components\Notification;
+use INTCore\OneARTConsole\Components\Notification;
+use INTCore\OneARTConsole\Str;
 
 class NotificationGenerator extends Generator
 {
@@ -15,7 +13,7 @@ class NotificationGenerator extends Generator
         $notification = Str::notification($name);
         $domain = Str::domain($domain);
         $path = $this->findNotificationPath($domain, $name);
-        if($this->exists($path)) {
+        if ($this->exists($path)) {
             throw new Exception('Notification already exists');
 
             return false;
@@ -31,7 +29,6 @@ class NotificationGenerator extends Generator
         );
 
         $this->createFile($path, $content);
-
 
         return new Notification(
             $notification,
@@ -52,7 +49,7 @@ class NotificationGenerator extends Generator
     public function getStub($isQueueable = false)
     {
         $stubName;
-        if($isQueueable) {
+        if ($isQueueable) {
             $stubName = '/stubs/notification-queue.stub';
         } else {
             $stubName = '/stubs/notification.stub';

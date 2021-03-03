@@ -1,19 +1,17 @@
 <?php
 
-
-namespace MarkRady\OneARTConsole\Generators;
+namespace INTCore\OneARTConsole\Generators;
 
 use Exception;
-use MarkRady\OneARTConsole\Str;
-use MarkRady\OneARTConsole\Components\Request;
-
+use INTCore\OneARTConsole\Components\Request;
+use INTCore\OneARTConsole\Str;
 
 /**
  * Class RequestGenerator
  *
  * @author Mark Rady <me@markrady.com>
  *
- * @package MarkRady\OneARTConsole\Generators
+ * @package INTCore\OneARTConsole\Generators
  */
 class RequestGenerator extends Generator
 {

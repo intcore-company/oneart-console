@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Env;
 use Illuminate\Support\Str;
 use ReflectionClass;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
+use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\Finder\Finder;
 use Throwable;
 
@@ -151,7 +151,10 @@ class Kernel
 
             return 1;
         } catch (Throwable $e) {
-            $e = new FatalThrowableError($e);
+            $e = new FatalError('A fatal error occurred', 0, [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
 
             $this->reportException($e);
 
@@ -386,7 +389,7 @@ class Kernel
      * @param  \Exception  $e
      * @return void
      */
-    protected function reportException(Exception $e)
+    protected function reportException(FatalError $e)
     {
         $this->app[ExceptionHandler::class]->report($e);
     }
@@ -398,7 +401,7 @@ class Kernel
      * @param  \Exception  $e
      * @return void
      */
-    protected function renderException($output, Exception $e)
+    protected function renderException($output, FatalError $e)
     {
         $this->app[ExceptionHandler::class]->renderForConsole($output, $e);
     }

@@ -19,6 +19,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\PhpExecutableFinder;
+use Symfony\Component\Console\Command\Command;
 
 class Application extends SymfonyApplication implements ApplicationContract
 {
@@ -227,10 +228,10 @@ class Application extends SymfonyApplication implements ApplicationContract
      * @param  \Symfony\Component\Console\Command\Command  $command
      * @return \Symfony\Component\Console\Command\Command
      */
-    public function add(SymfonyCommand $command)
+    public function add(SymfonyCommand $command): Command
     {
         if ($command instanceof Command) {
-            $command->setApp($this->app);
+            $command->setApplication($this);
         }
 
         return $this->addToParent($command);
